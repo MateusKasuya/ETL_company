@@ -1,0 +1,3 @@
+[tool.taskpy.tasks]
+run = "!pytest Tests/test_schema.py"
+test = "pytest Tests/test_schema.py"
