@@ -1,7 +1,7 @@
-from src.Extraction.carteira_vendas import main_df
+from src.DataFrame.carteira_vendas import main_df
 from src.schema import df_schema
-from src.Transform.dmotivo_recusa import motivo_recusa
-from src.Transform.dcontrato import contrato
+from src.DataLake.dmotivo_recusa import motivo_recusa
+from src.DataLake.dcontrato import contrato
 
 def test_main_df():
 

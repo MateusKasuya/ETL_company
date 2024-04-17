@@ -1,0 +1,48 @@
+Id Mot. Rec.,Id Mot. Rec.,Motivo de Recusa
+A2,A2,Erro Digitacao
+30,30,Cancelamento solicitado pelo Supervisor
+B8,B8,Acordo Comercial/Washout
+A0,A0,Substituicao de Contrato
+32,32,Cancelado para troca de embalagens
+43,43,Cancelado  saldo pedido não compl carga
+00,00,Atribuído pelo sistema (internamente)
+A9,A9,Negocio Cancelado-Opcao Bunge
+62,62,Cancelado troca companhia
+A1,A1,Negocio Cancelado - Opcao Fornecedor
+37,37,Cancelado por atraso na entrega
+31,31,Cancelado para troca de formula
+B2,B2,Cancelamento de Saldo
+YA,YA,CANCELADO P/ DEVOLUCAO NF
+39,39,Cancelado por falta de Matéria Prima
+Z6,Z6,CLIENTE INATIVO / INSC. EST.
+FE,FE,F&I_PEDIDO EM DUPLICIDADE
+41,41,Cancelado renegociação com cliente
+ZB,ZB,BLOQUEADO EDI
+FA,FA,F&I_DESISTENCIA DO CLIENTE
+A5,A5,Entregue em Outra Filial
+42,42,Cancelado falta de limite de crédito
+10,10,Solicitação do cliente não justificada
+FD,FD,F&I_CLIENTE INATIVO
+01,01,Data remessa tarde demais
+FR,FR,F&I_PARA AJUSTE DO PERFIL DA CARGA
+B7,B7,Transferência Filial do Cliente
+FB,FB,F&I_ERRO PEDIDO - EDI
+A7,A7,Juridico
+ZN,ZN,EDI - SOLICITADO PELO CLIENTE
+47,47,Cancelado desmenbramento pedido mãe EXP
+34,34,Cancelado devido a concorrência
+B5,B5,Alteração Filial de Embarque
+WB,WB,BLOQUEIO BONIFICAÇÃO
+92,92,CANCEL AUTOM SALDO PEDIDO MINIMO
+80,80,CTRC Cancelado
+51,51,Prazo entrega alterado solic supervisor
+FV,FV,F&I_MUDANÇA DE TRIBUTAÇÃO
+YW,YW,CANCEL PELO USUÁRIO
+YX,YX,CANC. TRANSF. PELO USUÁRIO
+36,36,Cancelado por prazo de pagamento vencido
+ZH,ZH,CANCELADO PELO COMERCIAL BLOQ.
+Y6,Y6,CANCELADO P/TRANSPORTE
+FY,FY,Cancelado Frete Fertilizantes
+B9,B9,Alteração de Frete
+YP,YP,ACERTO CARTEIRA C/BAAN
+Ñ9,Ñ9,F&I_TROCA DE EMBALAGEM

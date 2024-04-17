@@ -3,7 +3,7 @@ import numpy as np
 
 def main_df():
 
-    file_contrato = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Carteira Vendas.xlsx'
+    file_contrato = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/Carteira Vendas.xlsx'
     
     df = pd.read_excel(file_contrato)
     
@@ -96,7 +96,7 @@ def main_df():
             'Id Itinerário',
             'Itinerário',
             'Distância',
-            'Incoterms',
+            'Incoterms',    
             'Id Grupo Merc.',
             'Grupo de Mercadorias',
             'Id Produto',
@@ -105,17 +105,23 @@ def main_df():
             'NCM Produto'
             ]
     
-    df = df[ordem_colunas]
+    df = df.loc[:, ordem_colunas]
     
     df.replace('#', np.nan, inplace = True)
     df.replace('Não atribuído', np.nan, inplace = True)
     
-    df['OV'] = df['OV'].astype(int)
-
     return df
 
-
-
-
-
-
+def formar_tabela_dim(colunas_uteis):
+    
+    df = main_df()
+    
+    tabela_dimensao = df.loc[:, colunas_uteis]
+    
+    tabela_dimensao.drop_duplicates(inplace = True)
+    
+    tabela_dimensao.dropna(inplace = True)
+    
+    tabela_dimensao.index = tabela_dimensao[colunas_uteis[0]]
+    
+    return tabela_dimensao
