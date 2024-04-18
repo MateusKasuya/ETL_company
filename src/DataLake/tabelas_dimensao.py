@@ -47,7 +47,7 @@ uf = pd.concat([uf_origem, uf_destino], axis = 0)
 
 uf.drop_duplicates(inplace = True)
 
-uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/UF.csv', index = False, decimal = ',', encoding = 'latin-1')
+uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dUF.csv', index = False, decimal = ',', encoding = 'latin-1')
 
 
 # Cidade
@@ -86,44 +86,50 @@ cidade['Id Cidade'] = cidade.index
 
 cidade = cidade.loc[:, ['Id Cidade', 'Cidade', 'Id UF']]
 
-cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Cidade.csv', index = False, decimal = ',', encoding = 'latin-1')
+cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dcidade.csv', index = False, decimal = ',', encoding = 'latin-1')
 
-# Zona de Transp
-
-colunas_zt_origem = ['Zona Transp. Origem', 'Id UF Origem']
-
-zt_origem = formar_tabela_dim(colunas_uteis = colunas_zt_origem)
-
-trocar_nome_zt_origem = {
-    'Zona Transp. Origem' : 'Zona de Transporte',
-    'Id UF Origem' : 'Id UF'
-    }
-
-zt_origem.rename(columns = trocar_nome_zt_origem, inplace = True)
-
-colunas_zt_destino = ['Zona Transp. Destino', 'Id UF Destino']
-
-zt_destino = formar_tabela_dim(colunas_uteis = colunas_zt_destino)
-
-trocar_nome_zt_destino = {
-    'Zona Transp. Destino' : 'Zona de Transporte',
-    'Id UF Destino' : 'Id UF'
-    }
-
-zt_destino.rename(columns = trocar_nome_zt_destino, inplace = True)
-
-zt = pd.concat([zt_origem, zt_destino], axis = 0)
-
-zt.drop_duplicates(inplace = True)
-
-zt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Zona de Transporte.csv', index = False, decimal = ',', encoding = 'latin-1')
 
 # Local de Expedição
 
-colunas_local_exp = ['Id Local Exp.', 'Local Expedição', 'CNPJ Local Exp.', 'Zona Transp. Origem']
+colunas_local_exp = ['Id Local Exp.', 'Local Expedição', 'CNPJ Local Exp.', 'Id UF Origem', 'Origem', 'Zona Transp. Origem',]
 
 local_exp = formar_tabela_dim(colunas_uteis = colunas_local_exp)
 
-local_exp.rename(columns = {'Zona Transp. Origem' : 'Zona de Transporte'}, inplace = True)
+trocar_local_exp = {
+    'Id UF Origem' : 'Id UF',
+    'Origem' : 'Cidade',
+    'Zona Transp. Origem' : 'Zona de Transporte'
+    }
 
-local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Local de Expedição.csv', index = False, decimal = ',', encoding = 'latin-1')
+local_exp.rename(columns = trocar_local_exp, inplace = True)
+
+local_exp = local_exp.merge(cidade, on = ['Cidade', 'Id UF'], how = 'left')
+
+local_exp.drop(['Cidade'], axis = 1, inplace = True)
+
+local_exp = local_exp.loc[:, ['Id Local Exp.', 'Local Expedição', 'CNPJ Local Exp.', 'Id UF', 'Id Cidade', 'Zona de Transporte']]
+
+local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dlocal_expedição.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# Cliente
+
+colunas_clientes = ['Id Cliente', 'Cliente', 'CNPJ Raiz Cliente', 'CNPJ Cliente', 'CPF Cliente', 'Ins. Est. Cliente', 'Ins. Mun. Cliente', 'Id UF Destino', 'Destino', 'Zona Transp. Destino']
+
+cliente = formar_tabela_dim(colunas_uteis = colunas_clientes)
+
+trocar_cliente = {
+    'Id UF Destino' : 'Id UF',
+    'Destino' : 'Cidade',
+    'Zona Transp. Destino' : 'Zona de Transporte'
+    }
+
+cliente.rename(columns = trocar_cliente, inplace = True)
+
+cliente = cliente.merge(cidade, on = ['Cidade', 'Id UF'], how = 'left')
+
+cliente.drop(['Cidade'], axis = 1, inplace = True)
+
+cliente = cliente.loc[:, ['Id Cliente', 'Cliente', 'CNPJ Raiz Cliente', 'CNPJ Cliente','CPF Cliente', 'Ins. Est. Cliente', 'Ins. Mun. Cliente', 'Id UF', 'Id Cidade', 'Zona de Transporte']]
+
+cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dcliente.csv', index = False, decimal = ',', encoding = 'latin-1')

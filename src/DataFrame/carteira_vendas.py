@@ -53,7 +53,7 @@ def main_df():
     }
     
     df.rename(columns = header, inplace = True)
-    
+        
     ordem_colunas = [
             'Contrato Venda',
             'Item Contrato',
@@ -120,7 +120,7 @@ def formar_tabela_dim(colunas_uteis):
     
     tabela_dimensao.drop_duplicates(inplace = True)
     
-    tabela_dimensao.dropna(inplace = True)
+    tabela_dimensao.dropna(subset = [tabela_dimensao.columns[0]], inplace = True)
     
     tabela_dimensao.index = tabela_dimensao[colunas_uteis[0]]
     
