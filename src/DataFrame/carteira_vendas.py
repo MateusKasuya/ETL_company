@@ -3,9 +3,9 @@ import numpy as np
 
 def main_df():
 
-    file_contrato = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/Carteira Vendas.xlsx'
+    file_carteira = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/Carteira Vendas.xlsx'
     
-    df = pd.read_excel(file_contrato)
+    df = pd.read_excel(file_carteira)
     
     header = {
             'Nº pedido do cliente' : 'Pedido SalesForce',
@@ -49,7 +49,8 @@ def main_df():
             'Itinerário' : 'Id Itinerário',
             'Unnamed: 37' : 'Itinerário',
             'Motivo de Recusa' : 'Id Mot. Rec.',
-            'Unnamed: 40' : 'Motivo de Recusa'
+            'Unnamed: 40' : 'Motivo de Recusa',
+            'Distância' : 'Distância KM'
     }
     
     df.rename(columns = header, inplace = True)
@@ -95,7 +96,7 @@ def main_df():
             'Zona Transp. Destino',
             'Id Itinerário',
             'Itinerário',
-            'Distância',
+            'Distância KM',
             'Incoterms',    
             'Id Grupo Merc.',
             'Grupo de Mercadorias',
