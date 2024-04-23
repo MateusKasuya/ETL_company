@@ -1,6 +1,8 @@
 import pandas as pd
 from src.DataFrame.carteira_vendas import formar_tabela_dim
 from src.DataFrame.nota_fiscal import nota_fiscal
+from src.DataFrame.DT import formar_tabela_dt
+from src.DataFrame.conta_frete import conta_frete
 
 # Motivo de Recusas
 
@@ -410,3 +412,92 @@ nf_ordem_colunas = [
 nf = nf.loc[:, nf_ordem_colunas]
 
 nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fNF.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# Categoria DT
+
+colunas_categoria = [
+    'Id Categoria',
+    'Categoria'
+    ]
+
+categoria = formar_tabela_dt(colunas_categoria)
+
+categoria.rename(columns = {'Id Categoria' : 'Id'}, inplace = True)
+
+categoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dcategoria_dt.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# Transportador
+
+colunas_transportador = [
+    'Id Transportador',
+    'Transportador'
+    ]
+
+transportador = formar_tabela_dt(colunas_transportador)
+
+transportador.rename(columns = {'Id Transportador' : 'Id'}, inplace = True)
+
+transportador.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dtransportador.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# DT
+
+colunas_dt = [
+    'DT',
+    'Remessa', 
+    'Item Rem',
+    'Data de criação',
+    'Quantidade',
+    'Valor Frete Total',
+    'Id Categoria',
+    'Id Transportador',
+    ]
+
+dt = formar_tabela_dt(colunas_dt)
+
+dt['Remessa'] = dt['Remessa'].astype(str)
+dt['Item Rem'] = dt['Item Rem'].astype(str) 
+
+dt = dt.merge(nf[['Remessa', 'Item Rem', 'Id']], on = ['Remessa', 'Item Rem'], how = 'left')
+
+dt.rename(columns = {'Id' : 'Id NF'}, inplace = True)
+
+dt.index = dt.index + 1
+
+dt['Id'] = dt.index
+
+nova_ordem_dt = [
+    'Id',
+    'DT',
+    'Remessa', 
+    'Item Rem',
+    'Data de criação',
+    'Quantidade',
+    'Valor Frete Total',
+    'Id Categoria',
+    'Id Transportador',
+    'Id NF'
+    ]
+
+dt = dt.loc[:, nova_ordem_dt]
+
+dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fDT.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# Conta Frete
+
+conta_frete = conta_frete()
+
+conta_frete = conta_frete.merge(contrato[['Contrato Venda', 'Item Contrato', 'Id']], on = ['Contrato Venda', 'Item Contrato'], how = 'left')
+
+conta_frete.rename(columns = {'Id' : 'Id Contrato'}, inplace = True)
+
+conta_frete.index = conta_frete.index + 1
+
+conta_frete['Id'] = conta_frete.index
+
+conta_frete = conta_frete.loc[:, ['Id', 'Valor Frete Pedido', 'Id Contrato']]
+
+conta_frete.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dfrete_pedido.csv', index = False, decimal = ',', encoding = 'latin-1')
