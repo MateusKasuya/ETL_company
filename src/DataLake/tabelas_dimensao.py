@@ -3,6 +3,7 @@ from src.DataFrame.carteira_vendas import formar_tabela_dim
 from src.DataFrame.nota_fiscal import nota_fiscal
 from src.DataFrame.DT import formar_tabela_dt
 from src.DataFrame.conta_frete import conta_frete
+from src.DataFrame.estoque import formar_tabela_estoque
 
 # Motivo de Recusas
 
@@ -159,9 +160,17 @@ cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto
 
 # Grupo de Mercadorias
 
-colunas_mercadoria = ['Id Grupo Merc.', 'Grupo de Mercadorias']
+colunas_mercadoria_carteira = ['Id Grupo Merc.', 'Grupo de Mercadorias']
 
-grupo_mercadoria = formar_tabela_dim(colunas_uteis = colunas_mercadoria)
+grupo_mercadoria_carteira = formar_tabela_dim(colunas_uteis = colunas_mercadoria_carteira)
+
+colunas_mercadoria_estoque = ['Id Grupo Merc.', 'Grupo de Mercadorias']
+
+grupo_mercadoria_estoque = formar_tabela_estoque(colunas_mercadoria_estoque)
+
+grupo_mercadoria = pd.concat([grupo_mercadoria_carteira, grupo_mercadoria_estoque], axis = 0)
+
+grupo_mercadoria.drop_duplicates(inplace = True)
 
 trocar_mercadoria = {'Id Grupo Merc.' : 'Id'}
 
@@ -172,9 +181,19 @@ grupo_mercadoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documento
 
 # Produto
 
-colunas_produto = ['Id Produto', 'Produto', 'Unid. Produto', 'NCM Produto', 'Id Grupo Merc.']
+colunas_produto_carteira = ['Id Produto', 'Produto', 'Unid. Produto', 'NCM Produto', 'Id Grupo Merc.']
 
-produto = formar_tabela_dim(colunas_uteis = colunas_produto)
+produto_carteira = formar_tabela_dim(colunas_uteis = colunas_produto_carteira)
+
+produto_carteira.dropna(subset = 'NCM Produto', inplace = True)
+
+colunas_produto_estoque = ['Id Produto',  'Produto', 'Id Grupo Merc.']
+
+produto_estoque = formar_tabela_estoque(colunas_produto_estoque)
+
+produto = pd.concat([produto_carteira, produto_estoque], axis = 0)
+
+produto.drop_duplicates(subset = 'Id Produto', inplace = True)
 
 trocar_produto = {
     'Id Produto' : 'Id',
@@ -279,6 +298,10 @@ colunas_finais_contrato = [
 
 contrato = contrato.loc[:, colunas_finais_contrato]
 
+contrato['Data de criação'] = pd.to_datetime(contrato['Data de criação'], dayfirst = True)
+contrato['Data Início Entrega'] = pd.to_datetime(contrato['Data Início Entrega'], dayfirst = True)
+contrato['Data Fim Entrega'] = pd.to_datetime(contrato['Data Fim Entrega'], dayfirst = True)
+
 contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dcontrato.csv', index = False, decimal = ',', encoding = 'latin-1')
 
 
@@ -338,6 +361,8 @@ ov.index = ov.index + 1
 ov['Id'] = ov.index
 
 ov = ov.loc[:, ['Id', 'OV', 'Item OV', 'Id Contrato', 'Tipo', 'Data de criação', 'Quantidade', 'Valor', 'Requisição de compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Id UF Origem', 'Id Origem', 'Id Cliente', 'Id UF Destino', 'Id Destino', 'Id Itinerário', 'Id Grupo Merc.', 'Id Produto']]
+
+ov['Data de criação'] = pd.to_datetime(ov['Data de criação'], dayfirst = True)
 
 ov.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dov.csv', index = False, decimal = ',', encoding = 'latin-1')
 
@@ -411,6 +436,8 @@ nf_ordem_colunas = [
 
 nf = nf.loc[:, nf_ordem_colunas]
 
+nf['Data criação'] = pd.to_datetime(nf['Data criação'], dayfirst = True)
+
 nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fNF.csv', index = False, decimal = ',', encoding = 'latin-1')
 
 
@@ -483,6 +510,8 @@ nova_ordem_dt = [
 
 dt = dt.loc[:, nova_ordem_dt]
 
+dt['Data de criação'] = pd.to_datetime(dt['Data de criação'], dayfirst = True)
+
 dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fDT.csv', index = False, decimal = ',', encoding = 'latin-1')
 
 
@@ -501,3 +530,50 @@ conta_frete['Id'] = conta_frete.index
 conta_frete = conta_frete.loc[:, ['Id', 'Valor Frete Pedido', 'Id Contrato']]
 
 conta_frete.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/dfrete_pedido.csv', index = False, decimal = ',', encoding = 'latin-1')
+
+
+# Estoque
+
+colunas_estoque = [
+              'Id Centro',
+              'Id Grupo Merc.',
+              'Id Produto',
+              'Lote',
+              'Data Vencimento',
+              'Data Última EM',
+              'Texto Cabeç Doc',
+              'Id Cliente',
+              'Estoque Livre',
+              'Estoque Bloqueado',
+              'Estoque Consignado'
+      ]
+
+estoque = formar_tabela_estoque(colunas_estoque)
+
+estoque.reset_index(drop = True, inplace = True)
+
+estoque.index = estoque.index + 1
+
+estoque['Id'] = estoque.index
+
+ordem_colunas_estoque = [
+              'Id',
+              'Id Centro',
+              'Id Grupo Merc.',
+              'Id Produto',
+              'Lote',
+              'Data Vencimento',
+              'Data Última EM',
+              'Texto Cabeç Doc',
+              'Id Cliente',
+              'Estoque Livre',
+              'Estoque Bloqueado',
+              'Estoque Consignado'
+      ]
+
+estoque = estoque.loc[:, ordem_colunas_estoque]
+
+estoque['Data Vencimento'] = pd.to_datetime(estoque['Data Vencimento'], dayfirst = True)
+estoque['Data Última EM'] = pd.to_datetime(estoque['Data Última EM'], dayfirst = True)
+
+estoque.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/destoque.csv', index = False, decimal = ',', encoding = 'latin-1')
