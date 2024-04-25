@@ -49,3 +49,52 @@ RETURN CODE: 20
    em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
    em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
    em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+
+**** Log file opened by process 21468 at 2024-04-25 12:16:04 (UTC-03:00 Hora oficial do Brasil)
+
+SAP .NET Connector 3.0 with file version 3.1.0.12 running on 32-bit .NET Framework 4.0.30319.42000
+Program: C:\Program Files (x86)\Microsoft Office\Root\Office16\EXCEL.EXE
+Working directory: C:\Users\O1000246\BUNGE\Dados Supply Origeo - Documentos\Projeto_Dados\Data\Input
+Operating system: Windows 10 Enterprise 64-bit 
+Processor: 12x AMD64 (or x64)
+SAP release: 753, Kernel release: 753, Kernel patch level: 727
+Hostname: BRORIG-3TG2YS3, IP address: 169.254.182.156, IP_v6 address: fe80::8310:4abc:a0ae:bd5
+
+Default trace level: None
+
+>> Error entry 2024-04-25 12:16:04.249 [Thread 1]
+[NAME=BExCommunicationNCo3 MAX_POOL_SIZE=10 POOL_SIZE=1 IDLE_TIMEOUT=0 USE_SAPGUI=0 PASSWD=******** CLIENT=300 USER=O1000246 MSHOST=10.175.12.125 SYSNR=00 SAPROUTER= MSSERV=sapmsBIP GROUP=LOGON_BIP SYSID=BIP]
+SAP.Middleware.Connector.RfcCommunicationException: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       connection to partner '10.175.12.125:3325' broken
+TIME        Thu Apr 25 12:16:04 2024
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -6
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        4867
+DETAIL      NiIWrite: P=10.175.12.125:3325; L=10.175.248.97:49761
+SYSTEM CALL WSASend
+ERRNO       10054
+ERRNO TEXT  WSAECONNRESET: Connection reset by peer
+COUNTER     6
+
+RETURN CODE: 20
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn, RFCID rid)
+   em SAP.Middleware.Connector.RfcFunction.RfcCallReceive(RfcConnection conn)
+   em SAP.Middleware.Connector.RfcFunction.Invoke(RfcDestination destination)
+   em Nco3Support.InvokeRfcFunction(RfcDestination iNCoDestination, IRfcFunction& iIRfcFunction, Int32& eSubrc, String& eErrMsg)
+   em com.sap.bi.et.Communication.RSR_XLS_RFC.BExGeneratedRSR_XLS_RFC_2.Rsr_Net_Interface(String I_Input, String I_Statistic_Step_Close, String& E_Output, Int32& E_Subrc, BICS_PROV_T_MESSAGE& E_T_Message, RSRWBSTORETable& E_T_Mime, RSSTA_S_EVENTINPUTTable& I_T_Statistic_Info)
+   em com.sap.bi.et.Communication.RSR_XLS_RFCrfc.RSR_XLS_NET_INTERFACE(String iInput, String& eOutput, Byte[]& eRaw, BICS_PROV_T_MESSAGE& etMessage, RSSTA_S_EVENTINPUTTable i_t_statistic_info)
+   em com.sap.bi.et.analyzer.api.BExApplication.BackendCall(String iInput, String& eOutput, Byte[]& eRaw, Boolean iSubmitBuffer)
+   em com.sap.bi.et.analyzer.api.BExApplication.Process(BExParameter iParameter)
+   em com.sap.bi.et.analyzer.addin.BExExcelApplication.Process(BExParameter iParameter)
+   em com.sap.bi.et.analyzer.api.BExApplication.Free()
+   em com.sap.bi.et.analyzer.api.BExApplication.Dispose()
+   em com.sap.bi.et.analyzer.addin.BExConnect.ExcelCommunication.CloseWorkbookObjects(String iWorkbookName)
+   em com.sap.bi.et.analyzer.addin.BExConnect.ProcessWorkbookBeforeClose(Object iWorkbook, Boolean& cCancel)
+   em com.sap.bi.et.analyzer.addin.BExConnect.ExcelCommunication.WorkbookBeforeClose(Object iWorkbook, Boolean& cCancel)
+   em System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+   em System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+   em System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
