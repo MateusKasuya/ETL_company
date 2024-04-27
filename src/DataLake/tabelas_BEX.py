@@ -605,7 +605,9 @@ def dt():
         'Data de criação',
         'Quantidade',
         'Valor Frete Total',
+        'Valor Frete Lote',
         'Peso KG',
+        'Item Superior',
         'Id Categoria',
         'Id Transportador',
     ]
@@ -634,7 +636,9 @@ def dt():
         'Data de criação',
         'Quantidade',
         'Valor Frete Total',
+        'Valor Frete Lote',
         'Peso KG',
+        'Item Superior',
         'Id Categoria',
         'Id Transportador',
         'Id NF'
