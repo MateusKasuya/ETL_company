@@ -20,7 +20,7 @@ def formar_tabela_nota_fiscal():
         '\nVlr COFINS (NF)': 'Cofins',
         '\nVlr ICMS (NF)': 'ICMS',
         '\nVlr PIS (NF)': 'PIS',
-        '\nPeso Bruto NF': 'Peso KG'
+        '\nPeso Líquido NF': 'Peso KG'
     }
 
     nf.rename(columns=header, inplace=True)

@@ -16,7 +16,7 @@ def main_dt():
         'Unnamed: 4': 'Categoria',
         'Fornecimento': 'Remessa',
         'Qtd Fornecida UMV': 'Quantidade',
-        'Valor Frete Contrata': 'Valor Frete Total',
+        'Valor Frete Lote': 'Valor Frete Total',
         'Pes Bruto Ordem Vend': 'Peso KG'
     }
 
@@ -29,7 +29,6 @@ def main_dt():
         'Data de criação',
         'Quantidade',
         'Valor Frete Total',
-        'Valor Frete Lote',
         'Peso KG',
         'Item Superior',
         'Id Categoria',
