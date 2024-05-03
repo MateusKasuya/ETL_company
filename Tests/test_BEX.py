@@ -1,4 +1,4 @@
-from src.DataLake.tabelas_BEX import *
+from src.DataLake.BEX import *
 
 
 def test_categoria():
