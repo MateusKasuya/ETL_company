@@ -10,7 +10,7 @@ def formar_tabela_xml_cte():
     file_list = os.listdir(path)
 
     df_cte = pd.read_csv(
-        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fCTE.csv', decimal=',', encoding='latin-1')
+        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
 
     # Funções
 
@@ -280,3 +280,40 @@ def formar_tabela_xml_cte():
     #         os.remove(caminho_completo)
 
     return cte_final
+
+# Tabelas Cidade
+
+
+def cidade_xml():
+
+    df_cte = pd.read_csv(
+        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
+
+    origem = df_cte.loc[:, ['Origem', 'UF Origem']]
+
+    origem.rename(columns={'Origem': 'Cidade',
+                  'UF Origem': 'UF'}, inplace=True)
+
+    destino = df_cte.loc[:, ['Destino', 'UF Destino']]
+
+    destino.rename(columns={'Destino': 'Cidade',
+                   'UF Destino': 'UF'}, inplace=True)
+
+    cidade = pd.concat([origem, destino], axis=0)
+
+    cidade.drop_duplicates(inplace=True)
+
+    cidade.dropna(inplace=True)
+
+    cidade.reset_index(drop=True, inplace=True)
+
+    cidade.index = cidade.index + 1
+
+    cidade['Id'] = cidade.index
+
+    cidade = cidade.loc[:, ['Id', 'Cidade', 'UF']]
+
+    cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/dcidade.csv',
+                  index=False, decimal=',', encoding='latin-1')
+
+    return cidade
