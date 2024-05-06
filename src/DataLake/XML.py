@@ -305,14 +305,6 @@ def cidade_xml():
 
     cidade.dropna(inplace=True)
 
-    cidade.reset_index(drop=True, inplace=True)
-
-    cidade.index = cidade.index + 1
-
-    cidade['Id'] = cidade.index
-
-    cidade = cidade.loc[:, ['Id', 'Cidade', 'UF']]
-
     cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/dcidade.csv',
                   index=False, decimal=',', encoding='latin-1')
 

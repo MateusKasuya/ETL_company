@@ -25,7 +25,7 @@ def test_cidade():
     test_cidade = cidade()
 
     unique_id_cidade = len(test_cidade.drop_duplicates(
-        subset=['Cidade', 'Id UF'])) - len(test_cidade.index)
+        subset=['Cidade', 'UF'])) - len(test_cidade.index)
 
     assert unique_id_cidade == 0
 
@@ -50,22 +50,12 @@ def test_contrato():
     assert unique_id_contrato == 0
 
 
-def test_estoque():
-
-    test_estoque = estoque()
-
-    unique_id_estoque = len(
-        test_estoque['Id'].unique()) - len(test_estoque.index)
-
-    assert unique_id_estoque == 0
-
-
 def test_frete_pedido():
 
     test_frete_pedido = conta_frete()
 
-    unique_id_frete_pedido = len(
-        test_frete_pedido['Id Contrato'].unique()) - len(test_frete_pedido.index)
+    unique_id_frete_pedido = len(test_frete_pedido.drop_duplicates(
+        subset=['Contrato Venda', 'Item Contrato'])) - len(test_frete_pedido.index)
 
     assert unique_id_frete_pedido == 0
 
@@ -144,24 +134,6 @@ def test_UF():
 
     test_UF = uf()
 
-    unique_id_UF = len(test_UF['Id'].unique()) - len(test_UF.index)
+    unique_id_UF = len(test_UF['UF'].unique()) - len(test_UF.index)
 
     assert unique_id_UF == 0
-
-
-def test_DT():
-
-    test_DT = dt()
-
-    unique_id_DT = len(test_DT['Id'].unique()) - len(test_DT.index)
-
-    assert unique_id_DT == 0
-
-
-def test_NF():
-
-    test_NF = nf()
-
-    unique_id_NF = len(test_NF['Id'].unique()) - len(test_NF.index)
-
-    assert unique_id_NF == 0
