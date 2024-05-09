@@ -260,24 +260,27 @@ def formar_tabela_xml_cte():
     cte['Produto'] = produto_tratado
 
     # Juntando DF
+    
+    #  Para quando precisar fazer gambiarra
+    # df_cte = pd.DataFrame(columns = cte.columns)
 
     cte_final = pd.concat([cte, df_cte])
 
     cte_final['Data'] = pd.to_datetime(cte_final['Data'])
 
-    cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/fCTE.csv',
+    cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv',
                      index=False, decimal=',', encoding='latin-1')
 
     # Excluindo Arquivos
 
-    # arquivos = os.listdir(path)
+    arquivos = os.listdir(path)
 
-    # for arquivo in arquivos:
+    for arquivo in arquivos:
 
-    #     caminho_completo = os.path.join(path, arquivo)
+        caminho_completo = os.path.join(path, arquivo)
 
-    #     if os.path.isfile(caminho_completo):
-    #         os.remove(caminho_completo)
+        if os.path.isfile(caminho_completo):
+            os.remove(caminho_completo)
 
     return cte_final
 

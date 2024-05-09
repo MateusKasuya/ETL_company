@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['Tests\\test_BEX.py', 'src\\DataLake\\BEX.py', 'src\\DataFrame\\BEX\\carteira_vendas.py']
+recent_files = ['src\\DataLake\\Mercado.py']
 
 [main]
 version = 0.2.0
