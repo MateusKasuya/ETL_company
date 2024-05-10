@@ -20,8 +20,6 @@ def municipio():
 
     municipio['Id Microrregião'] = [i['microrregiao']['id'] for i in lista_mun]
     
-    municipio.index = municipio['Id']
-
     municipio.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmunicipio.csv',
                      index=False, decimal=',', encoding='latin-1')
 
@@ -46,8 +44,6 @@ def microrregiao():
 
     micro['Id Mesorregião'] = [i['mesorregiao']['id'] for i in lista_micro]
     
-    micro.index = micro['Id']
-
     micro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmicrorregiao.csv',
                  index=False, decimal=',', encoding='latin-1')
 
@@ -71,8 +67,6 @@ def mesorregiao():
 
     meso['Id UF'] = [i['UF']['id'] for i in lista_meso]
     
-    meso.index = meso['Id']
-
     meso.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmesorregiao.csv',
                 index=False, decimal=',', encoding='latin-1')
 
@@ -97,8 +91,6 @@ def uf():
 
     uf['Id Regiao'] = [i['regiao']['id'] for i in lista_uf]
     
-    uf.index = uf['Id']
-
     uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dUF.csv',
               index=False, decimal=',', encoding='latin-1')
 
@@ -121,8 +113,6 @@ def regiao():
 
     regiao['Região'] = [i['nome'] for i in lista_reg]
     
-    regiao.index = regiao['Id']
-
     regiao.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dregiao.csv',
                   index=False, decimal=',', encoding='latin-1')
 

@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from bs4 import BeautifulSoup
-
+import numpy as np
 
 def formar_tabela_xml_cte():
 
@@ -267,6 +267,16 @@ def formar_tabela_xml_cte():
     cte_final = pd.concat([cte, df_cte])
 
     cte_final['Data'] = pd.to_datetime(cte_final['Data'])
+    
+    cte_final['Valor Frete Total'] = cte_final['Valor Frete Total'].replace('', np.nan)
+    
+    cte_final['Valor Frete Total'] = cte_final['Valor Frete Total'].astype(float)
+    
+    cte_final['Peso Volume'] = cte_final['Peso Volume'].replace('', np.nan)
+    
+    cte_final['Peso Volume'] = cte_final['Peso Volume'].astype(float)
+    
+    cte_final.drop_duplicates(inplace = True)
 
     cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv',
                      index=False, decimal=',', encoding='latin-1')
@@ -288,6 +298,8 @@ def formar_tabela_xml_cte():
 
 
 def cidade_xml():
+    
+    # df_cte = formar_tabela_xml_cte()
 
     df_cte = pd.read_csv(
         'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
@@ -296,6 +308,7 @@ def cidade_xml():
 
     origem.rename(columns={'Origem': 'Cidade',
                   'UF Origem': 'UF'}, inplace=True)
+    
 
     destino = df_cte.loc[:, ['Destino', 'UF Destino']]
 
