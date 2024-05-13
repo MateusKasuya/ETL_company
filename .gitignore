@@ -11,6 +11,7 @@ __pycache__/
 *.so
 *.xlsx
 *.csv
+*.parquet
 
 # Distribution / packaging
 .Python
