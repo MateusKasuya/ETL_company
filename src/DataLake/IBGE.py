@@ -20,8 +20,8 @@ def municipio():
 
     municipio['Id Microrregião'] = [i['microrregiao']['id'] for i in lista_mun]
     
-    municipio.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmunicipio.csv',
-                     index=False, decimal=',', encoding='latin-1')
+    # municipio.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmunicipio.csv',
+                     # index=False, decimal=',', encoding='latin-1')
 
     return municipio
 
@@ -44,8 +44,8 @@ def microrregiao():
 
     micro['Id Mesorregião'] = [i['mesorregiao']['id'] for i in lista_micro]
     
-    micro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmicrorregiao.csv',
-                 index=False, decimal=',', encoding='latin-1')
+    # micro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmicrorregiao.csv',
+    #              index=False, decimal=',', encoding='latin-1')
 
     return micro
 # Mesorregião
@@ -67,8 +67,8 @@ def mesorregiao():
 
     meso['Id UF'] = [i['UF']['id'] for i in lista_meso]
     
-    meso.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmesorregiao.csv',
-                index=False, decimal=',', encoding='latin-1')
+    # meso.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dmesorregiao.csv',
+    #             index=False, decimal=',', encoding='latin-1')
 
     return meso
 
@@ -91,8 +91,8 @@ def uf():
 
     uf['Id Regiao'] = [i['regiao']['id'] for i in lista_uf]
     
-    uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dUF.csv',
-              index=False, decimal=',', encoding='latin-1')
+    # uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dUF.csv',
+    #           index=False, decimal=',', encoding='latin-1')
 
     return uf
 
@@ -113,7 +113,7 @@ def regiao():
 
     regiao['Região'] = [i['nome'] for i in lista_reg]
     
-    regiao.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dregiao.csv',
-                  index=False, decimal=',', encoding='latin-1')
+    # regiao.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/dregiao.csv',
+    #               index=False, decimal=',', encoding='latin-1')
 
     return regiao

@@ -258,6 +258,14 @@ def formar_tabela_xml_cte():
     produto_tratado = tratar_nested_tag(produto, 'proPred')
 
     cte['Produto'] = produto_tratado
+    
+    # Tipo CTE
+    
+    tipo_cte = appendar_xml_lista('tpCTe')
+    
+    tipo_cte_tratado = tratar_nested_tag(tipo_cte, 'tpCTe')
+    
+    cte['Tipo CTE'] = tipo_cte_tratado
 
     # Juntando DF
     
@@ -275,6 +283,8 @@ def formar_tabela_xml_cte():
     cte_final['Peso Volume'] = cte_final['Peso Volume'].replace('', np.nan)
     
     cte_final['Peso Volume'] = cte_final['Peso Volume'].astype(float)
+    
+    cte_final['Tipo CTE'] = cte_final['Tipo CTE'].astype(float)
     
     cte_final.drop_duplicates(inplace = True)
 
