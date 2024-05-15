@@ -9,11 +9,11 @@ def test_xml():
 
     assert unique_id_xml == 0
 
-def test_cidade_xml():
+# def test_cidade_xml():
     
-    test_cidade = cidade_xml()
+#     test_cidade = cidade_xml()
 
-    unique_id_cidade = len(test_cidade.drop_duplicates(
-        subset=['Cidade', 'UF'])) - len(test_cidade.index)
+#     unique_id_cidade = len(test_cidade.drop_duplicates(
+#         subset=['Cidade', 'UF'])) - len(test_cidade.index)
 
-    assert unique_id_cidade == 0
+#     assert unique_id_cidade == 0

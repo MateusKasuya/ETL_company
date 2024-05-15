@@ -284,6 +284,8 @@ def formar_tabela_xml_cte():
     
     cte_final['Peso Volume'] = cte_final['Peso Volume'].astype(float)
     
+    cte_final['Tipo CTE'] = cte_final['Tipo CTE'].replace('', np.nan)
+    
     cte_final['Tipo CTE'] = cte_final['Tipo CTE'].astype(float)
     
     cte_final.drop_duplicates(inplace = True)
@@ -331,7 +333,7 @@ def cidade_xml():
 
     cidade.dropna(inplace=True)
 
-    cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/dcidade.csv',
-                  index=False, decimal=',', encoding='latin-1')
+    # cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/dcidade.csv',
+    #               index=False, decimal=',', encoding='latin-1')
 
     return cidade

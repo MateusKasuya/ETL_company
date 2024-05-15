@@ -102,7 +102,7 @@ def cidade():
 
     trocar_nome_destino = {
         'Destino': 'Cidade',
-        'Id UF Destino': 'UF',
+        'UF Destino': 'UF',
     }
 
     destino.rename(columns=trocar_nome_destino, inplace=True)
