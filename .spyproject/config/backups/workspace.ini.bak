@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['src\\DataLake\\de_para_cidades.py', 'src\\DataLake\\BEX.py']
+recent_files = ['src\\DataLake\\de_para_cidades.py', 'src\\DataLake\\BEX.py', 'Tests\\test_XML.py', 'src\\DataLake\\XML.py']
 
 [main]
 version = 0.2.0

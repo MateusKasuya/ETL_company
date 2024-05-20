@@ -74,21 +74,7 @@ def formar_tabela_xml_cte():
         lista_xml_conteudo = [i.replace(']', '') for i in lista_xml_conteudo]
 
         return lista_xml_conteudo
-
-    # Separando CTE de NFE
-
-    separar_cte = appendar_xml_lista('CTe')
-
-    separar_cte = str(separar_cte)
-
-    separar_cte = separar_cte.split('], [')
-
-    lista_zip = list(zip(file_list, separar_cte))
-
-    lista_zip = [(fl, sc) for fl, sc in lista_zip if len(sc) > 0]
-
-    file_list, separar_cte = zip(*lista_zip)
-
+            
     # Criando DataFrame
 
     cte = pd.DataFrame()
@@ -109,25 +95,57 @@ def formar_tabela_xml_cte():
 
     cte['Expedidor'] = cte['Expedidor'].str.title()
 
-    # Origem
+    # Origem Expedidor
 
-    origem = nested_tag(expedidor, 'xMun')
+    origem_expedidor = nested_tag(expedidor, 'xMun')
 
-    origem_tratado = tratar_nested_tag(origem, 'xMun')
+    origem_expedidor_tratado = tratar_nested_tag(origem_expedidor, 'xMun')
 
-    cte['Origem'] = origem_tratado
+    cte['Origem Expedidor'] = origem_expedidor_tratado
 
-    cte['Origem'] = cte['Origem'].str.title()
+    cte['Origem Expedidor'] = cte['Origem Expedidor'].str.title()
 
-    # UF Origem
+    # UF Origem Expedidor
 
-    uf_origem = nested_tag(expedidor, 'UF')
+    uf_origem_expedidor = nested_tag(expedidor, 'UF')
 
-    uf_origem_tratado = tratar_nested_tag(uf_origem, 'UF')
+    uf_origem_expedidor_tratado = tratar_nested_tag(uf_origem_expedidor, 'UF')
 
-    cte['UF Origem'] = uf_origem_tratado
+    cte['UF Origem Expedidor'] = uf_origem_expedidor_tratado
 
-    cte['UF Origem'] = cte['UF Origem'].str.upper()
+    cte['UF Origem Expedidor'] = cte['UF Origem Expedidor'].str.upper()
+    
+    # Remetente
+
+    remetente = appendar_xml_lista('rem')
+
+    nome_remetente = nested_tag(remetente, 'xNome')
+
+    nome_remetente_tratado = tratar_nested_tag(nome_remetente, 'xNome')
+
+    cte['Remetente'] = nome_remetente_tratado
+
+    cte['Remetente'] = cte['Remetente'].str.title()
+
+    # Origem Remetente
+
+    origem_rementente = nested_tag(remetente, 'xMun')
+
+    origem_remetente_tratado = tratar_nested_tag(origem_rementente, 'xMun')
+
+    cte['Origem Remetente'] = origem_remetente_tratado
+
+    cte['Origem Remetente'] = cte['Origem Remetente'].str.title()
+
+    # UF Origem Remetente
+
+    uf_origem_remetente = nested_tag(remetente, 'UF')
+
+    uf_origem_remetente_tratado = tratar_nested_tag(uf_origem_remetente, 'UF')
+
+    cte['UF Origem Remetente'] = uf_origem_remetente_tratado
+
+    cte['UF Origem Remetente'] = cte['UF Origem Remetente'].str.upper()
 
     # Recebedor
 
@@ -136,30 +154,62 @@ def formar_tabela_xml_cte():
     nome_recebedor = nested_tag(recebedor, 'xNome')
 
     nome_recebedor_tratado = tratar_nested_tag(nome_recebedor, 'xNome')
-
+        
     cte['Recebedor'] = nome_recebedor_tratado
 
     cte['Recebedor'] = cte['Recebedor'].str.title()
 
-    # Destino
+    # Destino Recebedor
 
-    destino = nested_tag(recebedor, 'xMun')
+    destino_recebedor = nested_tag(recebedor, 'xMun')
 
-    destino_tratado = tratar_nested_tag(destino, 'xMun')
+    destino_recebedor_tratado = tratar_nested_tag(destino_recebedor, 'xMun')
 
-    cte['Destino'] = destino_tratado
+    cte['Destino Recebedor'] = destino_recebedor_tratado
 
-    cte['Destino'] = cte['Destino'].str.title()
+    cte['Destino Recebedor'] = cte['Destino Recebedor'].str.title()
 
-    # UF Destino
+    # UF Destino Recebedor
+    
+    uf_destino_recebedor = nested_tag(recebedor, 'UF')
 
-    uf_destino = nested_tag(recebedor, 'UF')
+    uf_destino_recebedor_tratado = tratar_nested_tag(uf_destino_recebedor, 'UF')
 
-    uf_destino_tratado = tratar_nested_tag(uf_destino, 'UF')
+    cte['UF Destino Recebedor'] = uf_destino_recebedor_tratado
 
-    cte['UF Destino'] = uf_destino_tratado
+    cte['UF Destino Recebedor'] = cte['UF Destino Recebedor'].str.upper()
 
-    cte['UF Destino'] = cte['UF Destino'].str.upper()
+    # Destinatário
+
+    destinatario = appendar_xml_lista('dest')
+
+    nome_destinatario = nested_tag(destinatario, 'xNome')
+
+    nome_destinatario_tratado = tratar_nested_tag(nome_destinatario, 'xNome')
+        
+    cte['Destinatário'] = nome_destinatario_tratado
+
+    cte['Destinatário'] = cte['Destinatário'].str.title()
+
+    # Destino Destinatário
+
+    destino_destinatario = nested_tag(destinatario, 'xMun')
+
+    destino_destinatario_tratado = tratar_nested_tag(destino_destinatario, 'xMun')
+
+    cte['Destino Destinatário'] = destino_destinatario_tratado
+
+    cte['Destino Destinatário'] = cte['Destino Destinatário'].str.title()
+
+    # UF Destino Destinatário
+    
+    uf_destino_destinatario = nested_tag(destinatario, 'UF')
+
+    uf_destino_destinatario_tratado = tratar_nested_tag(uf_destino_destinatario, 'UF')
+
+    cte['UF Destino Destinatário'] = uf_destino_destinatario_tratado
+
+    cte['UF Destino Destinatário'] = cte['UF Destino Destinatário'].str.upper()
 
     # Transportadora
 
@@ -316,18 +366,27 @@ def cidade_xml():
     df_cte = pd.read_csv(
         'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
 
-    origem = df_cte.loc[:, ['Origem', 'UF Origem']]
+    origem_exp = df_cte.loc[:, ['Origem Expedidor', 'UF Origem Expedidor']]
 
-    origem.rename(columns={'Origem': 'Cidade',
-                  'UF Origem': 'UF'}, inplace=True)
+    origem_exp.rename(columns={'Origem Expedidor': 'Cidade',
+                  'UF Origem Expedidor': 'UF'}, inplace=True)
     
+    origem_rem = df_cte.loc[:, ['Origem Remetente', 'UF Origem Remetente']]
 
-    destino = df_cte.loc[:, ['Destino', 'UF Destino']]
+    origem_rem.rename(columns={'Origem Remetente': 'Cidade',
+                  'UF Origem Remetente': 'UF'}, inplace=True)
+    
+    destino_rec = df_cte.loc[:, ['Destino Recebedor', 'UF Destino Recebedor']]
 
-    destino.rename(columns={'Destino': 'Cidade',
-                   'UF Destino': 'UF'}, inplace=True)
+    destino_rec.rename(columns={'Destino Recebedor': 'Cidade',
+                   'UF Destino Recebedor': 'UF'}, inplace=True)
+    
+    destino_des = df_cte.loc[:, ['Destino Destinatário', 'UF Destino Destinatário']]
 
-    cidade = pd.concat([origem, destino], axis=0)
+    destino_des.rename(columns={'Destino Destinatário': 'Cidade',
+                   'UF Destino Destinatário': 'UF'}, inplace=True)
+
+    cidade = pd.concat([origem_exp, origem_rem, destino_rec, destino_des], axis=0)
 
     cidade.drop_duplicates(inplace=True)
 
