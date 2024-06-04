@@ -1,9 +1,9 @@
 import pandas as pd
-from src.DataFrame.BEX.carteira_vendas import formar_tabela_dim
-from src.DataFrame.BEX.nota_fiscal import formar_tabela_nota_fiscal
-from src.DataFrame.BEX.DT import formar_tabela_dt
-from src.DataFrame.BEX.conta_frete import formar_tabela_conta_frete
-from src.DataFrame.BEX.estoque import formar_tabela_estoque
+from src.Bronze.BEX.carteira_vendas import formar_tabela_dim
+from src.Bronze.BEX.nota_fiscal import formar_tabela_nota_fiscal
+from src.Bronze.BEX.DT import formar_tabela_dt
+from src.Bronze.BEX.conta_frete import formar_tabela_conta_frete
+from src.Bronze.BEX.estoque import formar_tabela_estoque
 
 # Motivo de Recusas
 

@@ -1,7 +1,7 @@
 import pandas as pd
-from src.DataLake.XML import cidade_xml
+from src.Silver.XML import cidade_xml
 from thefuzz import process
-from src.DataLake.BEX import cidade
+from src.Silver.BEX import cidade
 
 file_ibge = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/IBGE/IBGE Municípios.xlsx'
 
@@ -34,6 +34,12 @@ lista_score = list(zip(*lista_score))[1]
 
 de_para_cte['Para'] = lista_cidade
 de_para_cte['Score'] = lista_score
+
+for index, row in de_para_cte.iterrows():
+    if row['De'] == 'Exterior-EX':
+        de_para_cte.at[index, 'Para'] = 'Exterior-EX'
+    else:
+        pass
 
 de_para_cte.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/De Para Cidades/de_para_cte.csv',
                    index=False, decimal=',', encoding='latin-1')

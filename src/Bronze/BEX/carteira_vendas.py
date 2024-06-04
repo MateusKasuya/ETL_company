@@ -9,7 +9,7 @@ def main_df():
     df = pd.read_excel(file_carteira)
 
     header = {
-        'Nº pedido do cliente': 'Pedido SalesForce',
+        'Pedido do Cliente': 'Pedido SalesForce',
         'Centro': 'Id Centro',
         'Unnamed: 5': 'Centro',
         'CNPJ empresa/LocNeg.': 'CNPJ Centro',
@@ -43,7 +43,7 @@ def main_df():
         '\n$ Valor OV': 'Valor OV',
         'CNPJ (Cliente)': 'CNPJ Cliente',
         'CPF (Cliente)': 'CPF Cliente',
-        'Inscrição Estadual (Cliente)': 'Ins. Est. Cliente',
+        'Inscr. Estadual (Cliente Recebedor)': 'Ins. Est. Cliente',
         'Inscrição Municipal': 'Ins. Mun. Cliente',
         'Grupo de Mercadorias': 'Id Grupo Merc.',
         'Unnamed: 22': 'Grupo de Mercadorias',
@@ -52,7 +52,11 @@ def main_df():
         'Motivo de Recusa': 'Id Mot. Rec.',
         'Unnamed: 40': 'Motivo de Recusa',
         'Distância': 'Distância KM',
-        'BP Parceiro (Loca  Expedição)': 'BP Local Expedição'
+        'BP Parceiro (Loca  Expedição)': 'BP Local Expedição',
+        'Data Criação OV/Fatura' : 'Data da OV',
+        'Data de criação' : 'Data do Contrato',
+        '\nPeso Liquido - Contrato' : 'Peso Liq. Contrato',
+        '\nPeso Liquido - OV' : 'Peso Liq. OV'
     }
 
     df.rename(columns=header, inplace=True)
@@ -64,13 +68,16 @@ def main_df():
         'Item OV',
         'Pedido SalesForce',
         'Tipo Documento',
-        'Data de criação',
+        'Data do Contrato',
+        'Data da OV',
         'Data Início Entrega',
         'Data Fim Entrega',
         'Qtde Contrato',
         'Valor Contrato',
+        'Peso Liq. Contrato',
         'Qtde OV',
         'Valor OV',
+        'Peso Liq. OV',
         'Moeda',
         'Id Mot. Rec.',
         'Motivo de Recusa',
@@ -106,7 +113,10 @@ def main_df():
         'Id Produto',
         'Produto',
         'Unid. Produto',
-        'NCM Produto'
+        'NCM Produto',
+        'Obs N. Fiscal (text)',
+        'Obs Ped.Niv.Cab(txt)',
+        'Rot Entrega (texto)'
     ]
 
     df = df.loc[:, ordem_colunas]

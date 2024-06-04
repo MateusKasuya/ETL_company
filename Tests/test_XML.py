@@ -1,4 +1,4 @@
-from src.DataLake.XML import formar_tabela_xml_cte, cidade_xml
+from src.Silver.XML import formar_tabela_xml_cte, cidade_xml
 
 def test_xml():
 
