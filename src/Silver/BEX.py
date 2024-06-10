@@ -267,27 +267,23 @@ def contrato():
         'Item Contrato',
         'Pedido SalesForce',
         'Tipo Documento',
-        'Data de criação',
+        'Data do Contrato',
         'Data Início Entrega',
         'Data Fim Entrega',
         'Qtde Contrato',
         'Valor Contrato',
+        'Peso Liq. Contrato',
         'Moeda',
         'Incoterms',
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
-        'UF Origem',
-        'Origem',
         'Id Cliente',
-        'CPF Cliente',
-        'Ins. Mun. Cliente',
-        'Zona Transp. Destino',
-        'UF Destino',
-        'Destino',
         'Id Itinerário',
+        'Incoterms',
         'Id Grupo Merc.',
         'Id Produto',
+        'Obs Ped.Niv.Cab(txt)'
     ]
 
     contrato = formar_tabela_dim(colunas_uteis=colunas_contrato)
@@ -302,8 +298,8 @@ def contrato():
 
     contrato = contrato[contrato['Quantidade'] > 0]
 
-    contrato['Data de criação'] = pd.to_datetime(
-        contrato['Data de criação'], dayfirst=True)
+    contrato['Data do Contrato'] = pd.to_datetime(
+        contrato['Data do Contrato'], dayfirst=True)
     contrato['Data Início Entrega'] = pd.to_datetime(
         contrato['Data Início Entrega'], dayfirst=True)
     contrato['Data Fim Entrega'] = pd.to_datetime(

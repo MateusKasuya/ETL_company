@@ -47,7 +47,9 @@ de_para_cte.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Pro
 
 # BEX SAP
 
-bex = cidade()
+file_cidade = 'Data/Output/BEX/dcidade.csv'
+
+bex = pd.read_csv(file_cidade, decimal=',', encoding='latin-1')
 
 bex['Chave'] = bex['Cidade'] + '-' + bex['UF']
 
