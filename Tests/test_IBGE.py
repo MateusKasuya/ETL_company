@@ -1,4 +1,5 @@
-from src.DataLake.IBGE import *
+from src.Silver.IBGE import *
+from src.Gold.IBGE import consolidar_cidades_IBGE
 
 
 def test_municipio():
@@ -49,3 +50,13 @@ def test_regiao():
         test_regiao['Id'].unique()) - len(test_regiao.index)
 
     assert unique_id_regiao == 0
+
+def test_consolidado_IBGE():
+    
+    test_IBGE = consolidar_cidades_IBGE()
+    
+    max_value_count = max(test_IBGE['Id Município'].value_counts())
+    
+    assert max_value_count == 1
+    
+    

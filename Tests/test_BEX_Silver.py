@@ -1,4 +1,4 @@
-from src.DataLake.BEX import *
+from src.Silver.BEX import *
 
 
 def test_categoria():
@@ -137,3 +137,4 @@ def test_UF():
     unique_id_UF = len(test_UF['UF'].unique()) - len(test_UF.index)
 
     assert unique_id_UF == 0
+    

@@ -18,8 +18,10 @@ def motivo_recusa():
 
     motivo_recusa.rename(columns=trocar_mot_rec, inplace=True)
 
-    motivo_recusa.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dmotivo_recusa.csv',
+    motivo_recusa.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dmotivo_recusa.csv',
                          index=False, decimal=',', encoding='latin-1')
+    motivo_recusa.to_excel('Data/Output/Gold/Motivos Recusas.xlsx',
+                         index=False)
 
     return motivo_recusa
 
@@ -39,8 +41,10 @@ def centro():
 
     centro.rename(columns=trocar_centro, inplace=True)
 
-    centro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dcentro.csv',
+    centro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcentro.csv',
                   index=False, decimal=',', encoding='latin-1')
+    centro.to_excel('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Gold/Centro.xlsx',
+                  index=False)
 
     return centro
 
@@ -75,7 +79,7 @@ def uf():
 
     uf.drop_duplicates(inplace=True)
 
-    uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dUF.csv',
+    uf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dUF.csv',
               index=False, decimal=',', encoding='latin-1')
 
     return uf
@@ -111,7 +115,7 @@ def cidade():
 
     cidade.drop_duplicates(inplace=True)
 
-    cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dcidade.csv',
+    cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcidade.csv',
                   index=False, decimal=',', encoding='latin-1')
 
     return cidade
@@ -145,7 +149,7 @@ def local_exp():
     local_exp['CNPJ'] = local_exp['CNPJ'].str.replace('-', '')
     local_exp['CNPJ'] = local_exp['CNPJ'].str.strip()
 
-    local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dlocal_expedição.csv',
+    local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dlocal_expedição.csv',
                      index=False, decimal=',', encoding='latin-1')
 
     return local_exp
@@ -170,7 +174,7 @@ def cliente():
 
     cliente.rename(columns=trocar_cliente, inplace=True)
 
-    cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dcliente.csv',
+    cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
 
     return cliente
@@ -199,8 +203,10 @@ def grupo_mercadoria():
 
     grupo_mercadoria.rename(columns=trocar_mercadoria, inplace=True)
 
-    grupo_mercadoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dgrupo_mercadoria.csv',
+    grupo_mercadoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dgrupo_mercadoria.csv',
                             index=False, decimal=',', encoding='latin-1')
+    grupo_mercadoria.to_excel('Data/Output/Gold/Grupo de Mercadorias.xlsx',
+                            index=False)
 
     return grupo_mercadoria
 # Produto
@@ -232,8 +238,10 @@ def produto():
 
     produto.rename(columns=trocar_produto, inplace=True)
 
-    produto.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dproduto.csv',
+    produto.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dproduto.csv',
                    index=False, decimal=',', encoding='latin-1')
+    produto.to_excel('Data/Output/Gold/Produto.xlsx',
+                            index=False)
 
     return produto
 
@@ -252,8 +260,10 @@ def itinerario():
         'KM', '')
     itinerario['Distância KM'] = itinerario['Distância KM'].str.strip()
 
-    itinerario.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/ditinerario.csv',
+    itinerario.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/ditinerario.csv',
                       index=False, decimal=',', encoding='latin-1')
+    itinerario.to_excel('Data/Output/Gold/Itinerário.xlsx',
+                            index=False)
 
     return itinerario
 
@@ -280,7 +290,6 @@ def contrato():
         'Id Local Exp.',
         'Id Cliente',
         'Id Itinerário',
-        'Incoterms',
         'Id Grupo Merc.',
         'Id Produto',
         'Obs Ped.Niv.Cab(txt)'
@@ -291,7 +300,8 @@ def contrato():
     trocar_contrato = {
         'Tipo Documento': 'Tipo',
         'Qtde Contrato': 'Quantidade',
-        'Valor Contrato': 'Valor'
+        'Valor Contrato': 'Valor',
+        'Peso Liq. Contrato': 'Peso Líquido'
     }
 
     contrato.rename(columns=trocar_contrato, inplace=True)
@@ -304,8 +314,12 @@ def contrato():
         contrato['Data Início Entrega'], dayfirst=True)
     contrato['Data Fim Entrega'] = pd.to_datetime(
         contrato['Data Fim Entrega'], dayfirst=True)
+    
+    contrato['Quantidade'] = contrato['Quantidade'].astype(float)
+    contrato['Valor'] = contrato['Valor'].astype(float)
+    contrato['Peso Líquido'] = contrato['Peso Líquido'].astype(float)
 
-    contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dcontrato.csv',
+    contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcontrato.csv',
                     index=False, decimal=',', encoding='latin-1')
 
     return contrato
@@ -321,9 +335,10 @@ def ov():
         'Contrato Venda',
         'Item Contrato',
         'Tipo Documento',
-        'Data de criação',
+        'Data da OV',
         'Qtde OV',
         'Valor OV',
+        'Peso Liq. OV',
         'Requisição de compra',
         'Id Mot. Rec.',
         'Id Centro',
@@ -343,18 +358,26 @@ def ov():
     trocar_ov = {
         'Tipo Documento': 'Tipo',
         'Qtde OV': 'Quantidade',
-        'Valor OV': 'Valor'
+        'Valor OV': 'Valor',
+        'Peso Liq. OV' : 'Peso Líquido',
     }
 
     ov.rename(columns=trocar_ov, inplace=True)
 
     ov = ov[ov['Quantidade'] > 0]
 
-    ov['Data de criação'] = pd.to_datetime(
-        ov['Data de criação'], dayfirst=True)
+    ov['Data da OV'] = pd.to_datetime(
+        ov['Data da OV'], dayfirst=True)
+    
+    ov['Quantidade'] = ov['Quantidade'].astype(float)
+    ov['Valor'] = ov['Valor'].astype(float)
+    ov['Peso Líquido'] = ov['Peso Líquido'].astype(float)
 
-    ov.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dOV.csv',
+
+    ov.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dOV.csv',
               index=False, decimal=',', encoding='latin-1')
+    ov.to_excel('Data/Output/Gold/Ordem de Venda.xlsx',
+              index=False)
 
     return ov
 
@@ -367,7 +390,7 @@ def nf():
 
     nf['Data criação'] = pd.to_datetime(nf['Data criação'], dayfirst=True)
 
-    nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/fNF.csv',
+    nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',
               index=False, decimal=',', encoding='latin-1')
 
     return nf
@@ -386,7 +409,7 @@ def categoria():
 
     categoria.rename(columns={'Id Categoria': 'Id'}, inplace=True)
 
-    categoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dcategoria_dt.csv',
+    categoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcategoria_dt.csv',
                      index=False, decimal=',', encoding='latin-1')
 
     return categoria
@@ -405,7 +428,7 @@ def transportador():
 
     transportador.rename(columns={'Id Transportador': 'Id'}, inplace=True)
 
-    transportador.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dtransportador.csv',
+    transportador.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dtransportador.csv',
                          index=False, decimal=',', encoding='latin-1')
 
     return transportador
@@ -433,7 +456,7 @@ def dt():
     dt['Data de criação'] = pd.to_datetime(
         dt['Data de criação'], dayfirst=True)
 
-    dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/fDT.csv',
+    dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fDT.csv',
               index=False, decimal=',', encoding='latin-1')
 
     return dt
@@ -444,8 +467,18 @@ def dt():
 def conta_frete():
 
     conta_frete = formar_tabela_conta_frete()
+    
+    for i in conta_frete['Contrato Venda']:
+        if isinstance(i, int):
+            int(i)
+    
+    for i in conta_frete['Item Contrato']:
+        if isinstance(i, int):
+            int(i)
+            
+    conta_frete['Valor Frete Pedido'] = conta_frete['Valor Frete Pedido'].astype(float)
 
-    conta_frete.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/dfrete_pedido.csv',
+    conta_frete.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dfrete_pedido.csv',
                        index=False, decimal=',', encoding='latin-1')
 
     return conta_frete
@@ -476,7 +509,7 @@ def estoque():
     estoque['Data Última EM'] = pd.to_datetime(
         estoque['Data Última EM'], dayfirst=True)
 
-    estoque.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/BEX/destoque.csv',
+    estoque.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/destoque.csv',
                    index=False, decimal=',', encoding='latin-1')
 
     return estoque
