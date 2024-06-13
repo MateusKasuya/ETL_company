@@ -41,6 +41,17 @@ def fazer_de_para_cte():
         if row['De'] == 'Exterior-EX':
             de_para_cte.at[index, 'Para'] = 'Exterior-EX'
     
+    def splitar_cidade_uf(cidade_uf: str):
+        
+        splitar_cidade_uf = cidade_uf.rsplit('-', 1)
+        
+        return pd.Series(splitar_cidade_uf)
+    
+    de_para_cte[['De-Cidade', 'De-UF']] = de_para_cte['De'].apply(splitar_cidade_uf)
+    de_para_cte[['Para-Cidade', 'Para-UF']] = de_para_cte['Para'].apply(splitar_cidade_uf)
+    
+    de_para_cte = de_para_cte.loc[:, ['De-Cidade', 'De-UF', 'Para-Cidade', 'Para-UF', 'Score']]
+    
     de_para_cte.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/De Para Cidades/de_para_cte.csv',
                        index=False, decimal=',', encoding='latin-1')
     

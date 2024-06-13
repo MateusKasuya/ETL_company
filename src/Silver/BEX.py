@@ -391,9 +391,18 @@ def nf():
     nf = formar_tabela_nota_fiscal()
 
     nf['Data criação'] = pd.to_datetime(nf['Data criação'], dayfirst=True)
+    
+    nf['Quantidade'] = nf['Quantidade'].astype(float)
+    nf['Valor'] = nf['Valor'].astype(float)
+    nf['Cofins'] = nf['Cofins'].astype(float)
+    nf['ICMS'] = nf['ICMS'].astype(float)
+    nf['PIS'] = nf['PIS'].astype(float)
+    nf['Peso KG'] = nf['Peso KG'].astype(float)    
 
     nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',
               index=False, decimal=',', encoding='latin-1')
+    nf.to_excel('Data/Output/Gold/Nota Fiscal.xlsx',
+              index=False)
 
     return nf
 
@@ -457,9 +466,15 @@ def dt():
 
     dt['Data de criação'] = pd.to_datetime(
         dt['Data de criação'], dayfirst=True)
+    
+    dt['Quantidade'] = dt['Quantidade'].astype(float)
+    dt['Valor Frete Total'] = dt['Valor Frete Total'].astype(float)
+    dt['Peso KG'] = dt['Peso KG'].astype(float)
 
     dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fDT.csv',
               index=False, decimal=',', encoding='latin-1')
+    dt.to_excel('Data/Output/Gold/Documento de Transporte.xlsx',
+              index=False)
 
     return dt
 

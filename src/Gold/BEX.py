@@ -35,6 +35,8 @@ def formar_tabela_cliente_gold():
     
     cliente.rename(columns = {'Cidade IBGE' : 'Destino'}, inplace = True)
     
+    cliente['Cliente'] = cliente['Cliente'].str.title()
+    
     cliente.to_excel('Data/Output/Gold/Cliente.xlsx', index = False)
     
     return cliente
@@ -51,6 +53,8 @@ def formar_tabela_contrato_gold():
     frete_pedido = pd.read_csv(file_frete_pedido, encoding='latin-1', decimal = ',')
     
     contrato = contrato.merge(frete_pedido, on = ['Contrato Venda', 'Item Contrato'], how = 'left')
+    
+    contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
     
     contrato = contrato.loc[:, ['Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
            'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
@@ -78,6 +82,8 @@ def formar_tabela_local_expedicao_gold():
     local_exp = local_exp.loc[:,['Id', 'Local Expedição', 'BP', 'CNPJ', 'UF', 'Cidade IBGE', 'Zona de Transporte']]
     
     local_exp.rename(columns = {'Cidade IBGE' : 'Origem'}, inplace = True)
+    
+    local_exp['Local Expedição'] = local_exp['Local Expedição'].str.title()
     
     local_exp.to_excel('Data/Output/Gold/Local de Expedição.xlsx', index = False)
     
