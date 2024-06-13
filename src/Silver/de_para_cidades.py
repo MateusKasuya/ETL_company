@@ -1,7 +1,7 @@
 import pandas as pd
 from thefuzz import process
 
-file_ibge = 'Data/Output/Gold/IBGE Municípios.xlsx'
+file_ibge = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Gold/IBGE Municípios.xlsx'
 
 ibge = pd.read_excel(file_ibge)
 

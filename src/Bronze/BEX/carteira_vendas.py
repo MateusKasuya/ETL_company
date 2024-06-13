@@ -102,7 +102,6 @@ def main_df():
         'UF Destino',
         'Nome UF Destino',
         'Destino',
-        'Zona Transp. Destino',
         'Id Itinerário',
         'Itinerário',
         'Distância KM',

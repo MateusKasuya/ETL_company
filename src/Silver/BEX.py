@@ -350,8 +350,10 @@ def ov():
         'Destino',
         'Id Itinerário',
         'Id Grupo Merc.',
-        'Id Produto'
-    ]
+        'Id Produto',
+        'Obs N. Fiscal (text)',
+        'Rot Entrega (texto)'
+        ]
 
     ov = formar_tabela_dim(colunas_uteis=colunas_OV)
 

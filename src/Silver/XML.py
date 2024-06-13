@@ -10,7 +10,7 @@ def formar_tabela_xml_cte():
     file_list = os.listdir(path)
 
     df_cte = pd.read_csv(
-        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
+        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv', decimal=',', encoding='latin-1')
 
     # Funções
 
@@ -340,7 +340,7 @@ def formar_tabela_xml_cte():
     
     cte_final.drop_duplicates(inplace = True)
 
-    cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv',
+    cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv',
                      index=False, decimal=',', encoding='latin-1')
 
     # Excluindo Arquivos
@@ -364,7 +364,7 @@ def cidade_xml():
     # df_cte = formar_tabela_xml_cte()
 
     df_cte = pd.read_csv(
-        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/fCTE.csv', decimal=',', encoding='latin-1')
+        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv', decimal=',', encoding='latin-1')
 
     origem_exp = df_cte.loc[:, ['Origem Expedidor', 'UF Origem Expedidor']]
 
@@ -392,7 +392,7 @@ def cidade_xml():
 
     cidade.dropna(inplace=True)
 
-    # cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/XML/dcidade.csv',
-    #               index=False, decimal=',', encoding='latin-1')
+    cidade.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/dcidade.csv',
+                  index=False, decimal=',', encoding='latin-1')
 
     return cidade
