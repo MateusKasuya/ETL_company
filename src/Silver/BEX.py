@@ -180,49 +180,20 @@ def cliente():
     return cliente
 
 
-# Grupo de Mercadorias
-
-def grupo_mercadoria():
-
-    colunas_mercadoria_carteira = ['Id Grupo Merc.', 'Grupo de Mercadorias']
-
-    grupo_mercadoria_carteira = formar_tabela_dim(
-        colunas_uteis=colunas_mercadoria_carteira)
-
-    colunas_mercadoria_estoque = ['Id Grupo Merc.', 'Grupo de Mercadorias']
-
-    grupo_mercadoria_estoque = formar_tabela_estoque(
-        colunas_mercadoria_estoque)
-
-    grupo_mercadoria = pd.concat(
-        [grupo_mercadoria_carteira, grupo_mercadoria_estoque], axis=0)
-
-    grupo_mercadoria.drop_duplicates(inplace=True)
-
-    trocar_mercadoria = {'Id Grupo Merc.': 'Id'}
-
-    grupo_mercadoria.rename(columns=trocar_mercadoria, inplace=True)
-
-    grupo_mercadoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dgrupo_mercadoria.csv',
-                            index=False, decimal=',', encoding='latin-1')
-    grupo_mercadoria.to_excel('Data/Output/Gold/Grupo de Mercadorias.xlsx',
-                            index=False)
-
-    return grupo_mercadoria
 # Produto
 
 
 def produto():
 
     colunas_produto_carteira = ['Id Produto', 'Produto',
-                                'Unid. Produto', 'NCM Produto', 'Id Grupo Merc.']
+                                'Unid. Produto', 'NCM Produto', 'Grupo de Mercadorias']
 
     produto_carteira = formar_tabela_dim(
         colunas_uteis=colunas_produto_carteira)
 
     produto_carteira.dropna(subset='NCM Produto', inplace=True)
 
-    colunas_produto_estoque = ['Id Produto',  'Produto', 'Id Grupo Merc.']
+    colunas_produto_estoque = ['Id Produto',  'Produto', 'Grupo de Mercadorias']
 
     produto_estoque = formar_tabela_estoque(colunas_produto_estoque)
 
@@ -290,7 +261,7 @@ def contrato():
         'Id Local Exp.',
         'Id Cliente',
         'Id Itinerário',
-        'Id Grupo Merc.',
+        'Grupo de Mercadorias',
         'Id Produto',
         'Obs Ped.Niv.Cab(txt)'
     ]
@@ -349,7 +320,7 @@ def ov():
         'UF Destino',
         'Destino',
         'Id Itinerário',
-        'Id Grupo Merc.',
+        'Grupo de Mercadorias',
         'Id Produto',
         'Obs N. Fiscal (text)',
         'Rot Entrega (texto)'

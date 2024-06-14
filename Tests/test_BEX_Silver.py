@@ -60,16 +60,6 @@ def test_frete_pedido():
     assert unique_id_frete_pedido == 0
 
 
-def test_mercadoria():
-
-    test_mercadoria = grupo_mercadoria()
-
-    unique_id_mercadoria = len(
-        test_mercadoria['Id'].unique()) - len(test_mercadoria.index)
-
-    assert unique_id_mercadoria == 0
-
-
 def test_itinerario():
 
     test_itinerario = itinerario()

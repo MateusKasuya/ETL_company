@@ -13,6 +13,7 @@ def test_cidade_xml():
     
     test_cidade_xml = fazer_de_para_cte()
     
-    max_value_count = max(test_cidade_xml['De'].value_counts())
+    unique_id_cidade = len(test_cidade_xml.drop_duplicates(
+        subset=['De-Cidade', 'De-UF'])) - len(test_cidade_xml.index)
 
-    assert max_value_count == 1
+    assert unique_id_cidade == 0
