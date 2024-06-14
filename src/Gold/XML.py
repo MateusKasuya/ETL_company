@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def formar_tabela_cidade_cte_gold():
@@ -58,6 +59,71 @@ def formar_tabela_cte_gold():
     
     cte = cte[~cte['XML'].isna()]
     
+    list_grupo_merc = []
+    
+    for i in cte['Produto']:
+        if isinstance(i, str):
+            if "KCL" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "SHENZI" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "00" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "FERTILIZANTE" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "LT" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "ADUBO" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "AGR" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "CLORETO" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "FOSFATO" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "MAMONA" in i:
+                list_grupo_merc.append('Sementes - Outros')
+            elif "MAP" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "X" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "PRIMOLEO" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "QUIMICOS" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "SAM" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "SEMENTE" in i:
+                list_grupo_merc.append('Sementes - Outros')
+            elif "SSP" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "SUBSTANCIA" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "SULFATO" in i:
+                list_grupo_merc.append('Fertilizantes Outros')
+            elif "TRUNFO" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "UNIZEB" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "UPL" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            elif "UREIA" in i:
+                list_grupo_merc.append('Defensor Agri Outros')
+            else:
+                list_grupo_merc.append('Outros')
+        else:
+            list_grupo_merc.append(np.nan)
+            
+    cte['Grupo de Mercadorias'] = list_grupo_merc
+    
+    dict_tipo_cte = {
+        0 : 'Normal',
+        1 : 'Complementar',
+        3 : 'Substituição'
+        }
+    
+    cte['Tipo CTE'] = cte['Tipo CTE'].map(dict_tipo_cte)
+            
     cte.to_excel('Data/Output/Gold/CTE.xlsx', index=False)
 
     return cte
