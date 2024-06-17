@@ -289,6 +289,9 @@ def contrato():
     contrato['Quantidade'] = contrato['Quantidade'].astype(float)
     contrato['Valor'] = contrato['Valor'].astype(float)
     contrato['Peso Líquido'] = contrato['Peso Líquido'].astype(float)
+    
+    contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
+    contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
 
     contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcontrato.csv',
                     index=False, decimal=',', encoding='latin-1')
@@ -345,7 +348,20 @@ def ov():
     ov['Quantidade'] = ov['Quantidade'].astype(float)
     ov['Valor'] = ov['Valor'].astype(float)
     ov['Peso Líquido'] = ov['Peso Líquido'].astype(float)
-
+    
+    ov['Contrato Venda'] = ov['Contrato Venda'].astype(str)
+    ov['Item Contrato'] = ov['Item Contrato'].astype(str)
+    
+    ov['Contrato-Item'] = ov['Contrato Venda'] + '-' + ov['Item Contrato']
+    
+    ov = ov.loc[:, [
+        'OV', 'Item OV', 'Contrato-Item', 'Tipo',
+               'Data da OV', 'Quantidade', 'Valor', 'Peso Líquido',
+               'Requisição de compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.',
+               'UF Origem', 'Origem', 'Id Cliente', 'UF Destino', 'Destino',
+               'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto',
+               'Obs N. Fiscal (text)', 'Rot Entrega (texto)'
+        ]]
 
     ov.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dOV.csv',
               index=False, decimal=',', encoding='latin-1')
@@ -369,6 +385,18 @@ def nf():
     nf['ICMS'] = nf['ICMS'].astype(float)
     nf['PIS'] = nf['PIS'].astype(float)
     nf['Peso KG'] = nf['Peso KG'].astype(float)    
+    
+    nf['Contrato Venda'] = nf['Contrato Venda'].astype(str)
+    nf['Item Contrato'] = nf['Item Contrato'].astype(str)
+    
+    nf['Contrato-Item'] = nf['Contrato Venda'] + '-' + nf['Item Contrato']
+    
+    nf = nf.loc[:,
+        ['Contrato-Item', 'OV', 'Item OV', 'Data criação',
+               'Tipo', 'Código status NFe', 'NF-e: Status Doc', 'Remessa', 'Item Rem',
+               'Lote', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
+               'Cofins', 'ICMS', 'PIS', 'Peso KG']
+        ]
 
     nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',
               index=False, decimal=',', encoding='latin-1')
@@ -441,7 +469,7 @@ def dt():
     dt['Quantidade'] = dt['Quantidade'].astype(float)
     dt['Valor Frete Total'] = dt['Valor Frete Total'].astype(float)
     dt['Peso KG'] = dt['Peso KG'].astype(float)
-
+    
     dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fDT.csv',
               index=False, decimal=',', encoding='latin-1')
     dt.to_excel('Data/Output/Gold/Documento de Transporte.xlsx',

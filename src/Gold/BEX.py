@@ -56,7 +56,12 @@ def formar_tabela_contrato_gold():
     
     contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
     
-    contrato = contrato.loc[:, ['Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
+    contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
+    contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
+    
+    contrato['Contrato-Item'] = contrato['Contrato Venda'] + '-' + contrato['Item Contrato']
+    
+    contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
            'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
            'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
            'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Id Cliente',

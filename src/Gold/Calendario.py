@@ -37,6 +37,8 @@ def calendario():
     df['Semestre'] = [math.ceil(q/6) for q in df['Mês'].astype(int)]
     df['Mês/Ano'] = df['Data'].dt.strftime('%b/%y')
     df['Ano/Mês'] = df['Data'].dt.strftime('%Y/%m')
+    df['Hoje'] = [True if d[:13] == str(today) else False for d in df['Data'].astype(str)]
+    df['Até Hoje'] = [True if d[:13] <= str(today) else False for d in df['Data'].astype(str)]
     
     df.to_excel('Data/Output/Gold/Calendário.xlsx', index = False)
 
