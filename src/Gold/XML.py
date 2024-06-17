@@ -50,12 +50,6 @@ def formar_tabela_cte_gold():
                     'Cidade', 'UF'], how='left')
     cte.drop(['Destino Destinatário', 'UF', 'Cidade'], axis=1, inplace=True)
     cte.rename(columns={'Cidade IBGE': 'Destino Destinatário'}, inplace=True)
-
-    cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'UF Origem Expedidor', 'Remetente',
-                      'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
-                      'Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora', 'Data',
-                      'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Produto',
-                      'Tipo CTE']]
     
     cte = cte[~cte['XML'].isna()]
     
@@ -123,6 +117,12 @@ def formar_tabela_cte_gold():
         }
     
     cte['Tipo CTE'] = cte['Tipo CTE'].map(dict_tipo_cte)
+    
+    cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'UF Origem Expedidor', 'Remetente',
+                      'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
+                      'Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora', 'Data',
+                      'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Produto','Grupo de Mercadorias',
+                      'Tipo CTE']]
             
     cte.to_excel('Data/Output/Gold/CTE.xlsx', index=False)
 
