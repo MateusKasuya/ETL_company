@@ -55,6 +55,7 @@ def formar_tabela_contrato_gold():
     contrato = contrato.merge(frete_pedido, on = ['Contrato Venda', 'Item Contrato'], how = 'left')
     
     contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
+    contrato['Valor Frete R$/t'] = contrato['Valor Frete Pedido'] / (contrato['Peso Líquido'] / 1000)
     
     contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
     contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
@@ -65,7 +66,7 @@ def formar_tabela_contrato_gold():
            'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
            'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
            'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Id Cliente',
-           'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Obs Ped.Niv.Cab(txt)']]
+           'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Valor Frete R$/t', 'Obs Ped.Niv.Cab(txt)']]
     
     contrato.to_excel('Data/Output/Gold/Contrato.xlsx', index = False)
     
