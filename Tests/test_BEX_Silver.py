@@ -1,16 +1,5 @@
 from src.Silver.BEX import *
 
-
-def test_categoria():
-
-    test_categoria = categoria()
-
-    unique_id_categoria = len(
-        test_categoria['Id'].unique()) - len(test_categoria.index)
-
-    assert unique_id_categoria == 0
-
-
 def test_centro():
 
     test_centro = centro()
@@ -110,16 +99,6 @@ def test_produto():
     assert unique_id_produto == 0
 
 
-def test_transportadora():
-
-    test_transportadora = transportador()
-
-    unique_id_transportadora = len(
-        test_transportadora['Id'].unique()) - len(test_transportadora.index)
-
-    assert unique_id_transportadora == 0
-
-
 def test_UF():
 
     test_UF = uf()
@@ -127,4 +106,23 @@ def test_UF():
     unique_id_UF = len(test_UF['UF'].unique()) - len(test_UF.index)
 
     assert unique_id_UF == 0
+    
+    
+def test_nf():
+    
+    test_nf = nf()
+    
+    sum_nf = sum(test_nf['Valor'])
+    
+    assert sum_nf > 0
+    
+
+def test_dt():
+    
+    test_dt = dt()
+    
+    sum_dt = sum(test_dt['Quantidade'])
+    
+    assert sum_dt > 0
+    
     

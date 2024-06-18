@@ -405,45 +405,6 @@ def nf():
 
     return nf
 
-
-# Categoria DT
-
-def categoria():
-
-    colunas_categoria = [
-        'Id Categoria',
-        'Categoria'
-    ]
-
-    categoria = formar_tabela_dt(colunas_categoria)
-
-    categoria.rename(columns={'Id Categoria': 'Id'}, inplace=True)
-
-    categoria.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcategoria_dt.csv',
-                     index=False, decimal=',', encoding='latin-1')
-
-    return categoria
-
-
-# Transportador
-
-def transportador():
-
-    colunas_transportador = [
-        'Id Transportador',
-        'Transportador'
-    ]
-
-    transportador = formar_tabela_dt(colunas_transportador)
-
-    transportador.rename(columns={'Id Transportador': 'Id'}, inplace=True)
-
-    transportador.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dtransportador.csv',
-                         index=False, decimal=',', encoding='latin-1')
-
-    return transportador
-
-
 # DT
 
 def dt():
@@ -458,7 +419,11 @@ def dt():
         'Peso KG',
         'Item Superior',
         'Id Categoria',
+        'Categoria',
+        'DT Agrupadora Pai',
         'Id Transportador',
+        'Transportador',
+        'Grupo de Mercadorias'
     ]
 
     dt = formar_tabela_dt(colunas_dt)

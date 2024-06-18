@@ -33,8 +33,10 @@ def main_dt():
         'Item Superior',
         'Id Categoria',
         'Categoria',
+        'DT Agrupadora Pai',
         'Id Transportador',
-        'Transportador'
+        'Transportador',
+        'Grupo de Mercadorias'
     ]
 
     dt = dt.loc[:, ordem_colunas]
