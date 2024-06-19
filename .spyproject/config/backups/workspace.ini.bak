@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['src\\Bronze\\BEX\\carteira_vendas.py', 'src\\Silver\\BEX.py', 'Tests\\test_BEX_Silver.py', 'src\\Gold\\BEX.py', 'Tests\\test_BEX_Gold.py', 'src\\Gold\\XML.py', 'Tests\\test_google_maps.py', 'Tests\\test_IBGE.py', 'Tests\\test_mercado.py', 'src\\Gold\\Calendario.py', 'Tests\\test_calendario.py']
+recent_files = ['src\\Gold\\BEX.py', 'Tests\\test_9_BEX_Gold.py', 'src\\Silver\\rotas_google_maps.py', 'src\\Silver\\salesforce.py']
 
 [main]
 version = 0.2.0

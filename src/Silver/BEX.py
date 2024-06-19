@@ -394,7 +394,7 @@ def nf():
     nf = nf.loc[:,
         ['Contrato-Item', 'OV', 'Item OV', 'Data criação',
                'Tipo', 'Código status NFe', 'NF-e: Status Doc', 'Remessa', 'Item Rem',
-               'Lote', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
+               'Lote', 'Grupo de mercadorias', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
                'Cofins', 'ICMS', 'PIS', 'Peso KG']
         ]
 

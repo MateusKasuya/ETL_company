@@ -39,14 +39,14 @@ def test_contrato():
     assert unique_id_contrato == 0
 
 
-def test_frete_pedido():
+# def test_frete_pedido():
 
-    test_frete_pedido = conta_frete()
+#     test_frete_pedido = conta_frete()
 
-    unique_id_frete_pedido = len(test_frete_pedido.drop_duplicates(
-        subset=['Contrato Venda', 'Item Contrato'])) - len(test_frete_pedido.index)
+#     unique_id_frete_pedido = len(test_frete_pedido.drop_duplicates(
+#         subset=['Contrato Venda', 'Item Contrato'])) - len(test_frete_pedido.index)
 
-    assert unique_id_frete_pedido == 0
+#     assert unique_id_frete_pedido == 0
 
 
 def test_itinerario():

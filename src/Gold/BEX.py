@@ -48,25 +48,28 @@ def formar_tabela_contrato_gold():
     
     contrato = pd.read_csv(file_contrato, encoding='latin-1', decimal = ',')
     
-    file_frete_pedido = 'Data/Output/Silver/BEX/dfrete_pedido.csv'
+    # file_frete_pedido = 'Data/Output/Silver/BEX/dfrete_pedido.csv'
+    
+    # frete_pedido = pd.read_csv(file_frete_pedido, encoding='latin-1', decimal = ',')
+    
+    file_frete_pedido = 'Data/Output/Silver/Sales Force/SalesForce.csv'
     
     frete_pedido = pd.read_csv(file_frete_pedido, encoding='latin-1', decimal = ',')
-    
-    contrato = contrato.merge(frete_pedido, on = ['Contrato Venda', 'Item Contrato'], how = 'left')
-    
-    contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
-    contrato['Valor Frete R$/t'] = contrato['Valor Frete Pedido'] / (contrato['Peso Líquido'] / 1000)
-    
+            
     contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
     contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
     
     contrato['Contrato-Item'] = contrato['Contrato Venda'] + '-' + contrato['Item Contrato']
     
+    contrato = contrato.merge(frete_pedido, on = ['Contrato-Item'], how = 'left')
+    
+    contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
+    
     contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
            'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
            'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
            'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Id Cliente',
-           'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Valor Frete R$/t', 'Obs Ped.Niv.Cab(txt)']]
+           'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Obs Ped.Niv.Cab(txt)']]
     
     contrato.to_excel('Data/Output/Gold/Contrato.xlsx', index = False)
     
