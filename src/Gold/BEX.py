@@ -61,7 +61,9 @@ def formar_tabela_contrato_gold():
     
     contrato['Contrato-Item'] = contrato['Contrato Venda'] + '-' + contrato['Item Contrato']
     
-    contrato = contrato.merge(frete_pedido, on = ['Contrato-Item'], how = 'left')
+    frete_pedido['Contrato Venda'] = frete_pedido['Contrato Venda'].astype(str) 
+    
+    contrato = contrato.merge(frete_pedido, on = ['Contrato Venda'], how = 'left')
     
     contrato['Valor Frete Pedido'] = contrato['Valor Frete Pedido'].fillna(0)
     

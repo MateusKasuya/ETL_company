@@ -102,11 +102,11 @@ def formar_tabela_cte_gold():
             elif "UPL" in i:
                 list_grupo_merc.append('Defensor Agri Outros')
             elif "UREIA" in i:
-                list_grupo_merc.append('Defensor Agri Outros')
+                list_grupo_merc.append('Fertilizantes Outros')
             else:
                 list_grupo_merc.append('Outros')
         else:
-            list_grupo_merc.append(np.nan)
+            list_grupo_merc.append('Outros')
             
     cte['Grupo de Mercadorias'] = list_grupo_merc
     
