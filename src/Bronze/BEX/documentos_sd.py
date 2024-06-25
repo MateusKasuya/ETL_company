@@ -4,57 +4,63 @@ import numpy as np
 
 def main_df():
 
-    file_carteira = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/BEX/Carteira Vendas.xlsx'
+    file_sd_23 = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/BEX/Documentos SD 23.xlsx'
+    file_sd_24 = 'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Input/BEX/Documentos SD 24.xlsx'
 
-    df = pd.read_excel(file_carteira)
+    df_23 = pd.read_excel(file_sd_23)
+    df_24 = pd.read_excel(file_sd_24)
+      
+    df = pd.concat([df_23, df_24], axis = 0)
 
     header = {
-        'Pedido do Cliente': 'Pedido SalesForce',
+        'Nº pedido do cliente': 'Pedido SalesForce',
         'Centro': 'Id Centro',
         'Unnamed: 5': 'Centro',
+        'Rua' : 'Endereço Centro',
         'CNPJ empresa/LocNeg.': 'CNPJ Centro',
-        'Local Expedição': 'Id Local Exp.',
-        'Unnamed: 8': 'Local Expedição',
+        'Local de Expedição': 'Id Local Exp.',
+        'Unnamed: 9': 'Local Expedição',
         'Cidade': 'Origem',
         'Estado': 'UF Origem',
-        'Unnamed: 11': 'Nome UF Origem',
+        'Unnamed: 12': 'Nome UF Origem',
         'Recebedor Mercadoria': 'Id Cliente',
-        'Unnamed: 13': 'Cliente',
+        'Unnamed: 14': 'Cliente',
         'CNPJ  Raiz': 'CNPJ Raiz Cliente',
         'Estado.1': 'UF Destino',
-        'Unnamed: 16': 'Nome UF Destino',
+        'Unnamed: 17': 'Nome UF Destino',
         'Cidade.1': 'Destino',
         'Material': 'Id Produto',
-        'Unnamed: 23': 'Produto',
+        'Unnamed: 24': 'Produto',
         'UM básica': 'Unid. Produto',
-        'Item Contr Venda': 'Item Contrato',
+        'Moeda Documento' : 'Moeda',
+        'Item Contr Venda SD': 'Item Contrato',
         'CNPJ (Local Expedição)': 'CNPJ Local Exp.',
-        'Código de controle': 'NCM Produto',
+        'Código de Controle': 'NCM Produto',
         'Data Entrega': 'Data Fim Entrega',
         'Data Retirada': 'Data Início Entrega',
         'Tipo Doc. Venda': 'Tipo Documento',
-        'Zona Transp (Local Expedição)': 'Zona Transp. Origem',
-        'Zona Transp. (Cliente Recebedor)': 'Zona Transp. Destino',
-        '\nQtde Contrato': 'Qtde Contrato',
-        '\n$ Valor Contrato': 'Valor Contrato',
-        'Documento Vendas': 'OV',
+        'Contrato - Qtde': 'Qtde Contrato',
+        'Contrato - $ Valor': 'Valor Contrato',
+        'Documento de vendas': 'OV',
         'Item Doc Vendas': 'Item OV',
-        '\nQtde OV': 'Qtde OV',
-        '\n$ Valor OV': 'Valor OV',
+        'OV - Qtde': 'Qtde OV',
+        'OV - $ Valor': 'Valor OV',
         'CNPJ (Cliente)': 'CNPJ Cliente',
         'CPF (Cliente)': 'CPF Cliente',
-        'Inscr. Estadual (Cliente Recebedor)': 'Ins. Est. Cliente',
+        'Inscrição Estadual (Cliente)': 'Ins. Est. Cliente',
         'Inscrição Municipal': 'Ins. Mun. Cliente',
         'Itinerário': 'Id Itinerário',
-        'Unnamed: 35': 'Itinerário',
+        'Unnamed: 36': 'Itinerário',
         'Motivo de Recusa': 'Id Mot. Rec.',
-        'Unnamed: 38': 'Motivo de Recusa',
+        'Unnamed: 39': 'Motivo de Recusa',
         'Distância': 'Distância KM',
         'BP Parceiro (Loca  Expedição)': 'BP Local Expedição',
-        'Data Criação OV/Fatura' : 'Data da OV',
+        'Data de Criação' : 'Data da OV',
         'Data de criação' : 'Data do Contrato',
-        '\nPeso Liquido - Contrato' : 'Peso Liq. Contrato',
-        '\nPeso Liquido - OV' : 'Peso Liq. OV'
+        'Contrato - Peso Líquido' : 'Peso Liq. Contrato',
+        'OV - Peso Líquido' : 'Peso Liq. OV',
+        'Ctg. Doc. SD' : 'Categoria Documento',
+        'Contrato Venda SD' : 'Contrato Venda'
     }
 
     df.rename(columns=header, inplace=True)
@@ -65,6 +71,7 @@ def main_df():
         'OV',
         'Item OV',
         'Pedido SalesForce',
+        'Categoria Documento',
         'Tipo Documento',
         'Data do Contrato',
         'Data da OV',
@@ -79,10 +86,11 @@ def main_df():
         'Moeda',
         'Id Mot. Rec.',
         'Motivo de Recusa',
-        'Requisição de compra',
+        'Requisição Compra',
         'Id Centro',
         'Centro',
         'CNPJ Centro',
+        'Endereço Centro',
         'Id Local Exp.',
         'Local Expedição',
         'BP Local Expedição',
@@ -90,7 +98,6 @@ def main_df():
         'UF Origem',
         'Nome UF Origem',
         'Origem',
-        'Zona Transp. Origem',
         'Id Cliente',
         'Cliente',
         'CNPJ Raiz Cliente',
@@ -118,7 +125,7 @@ def main_df():
 
     df.replace('#', np.nan, inplace=True)
     df.replace('Não atribuído', np.nan, inplace=True)
-
+    
     return df
 
 

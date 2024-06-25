@@ -1,4 +1,4 @@
-from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold
+from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold
 
 def test_cidade_sap_gold():
 
@@ -36,3 +36,22 @@ def test_local_exp_gold():
     max_value = max(local_exp['Id'].value_counts())
         
     assert max_value == 1
+    
+    
+def test_ov_gold():
+
+    ov = formar_tabela_ov_gold()
+    
+    max_value = max(ov['OV-Item'].value_counts())
+    
+    assert max_value == 1
+    
+def test_dt_gold():
+    
+    test_dt = formar_tabela_dt_gold()
+    
+    unique_id_dt = len(test_dt.drop_duplicates(
+        subset=['DT', 'Remessa', 'Item Rem'])) - len(test_dt.index)
+    
+    assert unique_id_dt == 0
+    

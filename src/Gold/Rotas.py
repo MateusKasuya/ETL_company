@@ -7,6 +7,7 @@ def rotas():
     file_local_exp = 'Data/Output/Gold/Local de Expedição.xlsx'
     file_cliente = 'Data/Output/Gold/Cliente.xlsx'
     file_cte = 'Data/Output/Gold/CTE.xlsx'
+    file_ov = 'Data/Output/Gold/Ordem de Venda.xlsx'
     
     contrato = pd.read_excel(file_contrato)
     contrato = contrato.loc[:,['Id Local Exp.', 'Id Cliente']]
@@ -26,6 +27,17 @@ def rotas():
     
     rota_contrato.dropna(inplace = True)
     
+    ov = pd.read_excel(file_ov)
+    ov = ov.loc[:, ['Id Local Exp.', 'Id Cliente']]    
+
+    rota_ov = ov.merge(local_exp, left_on = 'Id Local Exp.', right_on = 'Id', how = 'left')
+    rota_ov = rota_ov.merge(cliente, left_on = 'Id Cliente', right_on = 'Id', how = 'left')
+    
+    rota_ov.rename(columns = {'UF_x' : 'UF Origem', 'UF_y' : 'UF Destino'}, inplace = True)
+    
+    rota_ov = rota_ov.loc[:, ['Origem', 'UF Origem', 'Destino', 'UF Destino']]
+    
+    rota_ov.dropna(inplace = True)
     
     cte = pd.read_excel(file_cte)
     
@@ -44,7 +56,7 @@ def rotas():
     
     cte.dropna(inplace = True)
     
-    rota = pd.concat([rota_contrato, cte], axis = 0)
+    rota = pd.concat([rota_contrato, cte, rota_ov], axis = 0)
     
     rota.drop_duplicates(inplace = True)
     

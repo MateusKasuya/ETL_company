@@ -90,7 +90,7 @@ def formar_tabela_local_expedicao_gold():
     
     local_exp = local_exp.merge(cidade, left_on = ['Origem', 'UF'], right_on = ['Cidade', 'UF'], how = 'left')
     
-    local_exp = local_exp.loc[:,['Id', 'Local Expedição', 'BP', 'CNPJ', 'UF', 'Cidade IBGE', 'Zona de Transporte']]
+    local_exp = local_exp.loc[:,['Id', 'Local Expedição', 'BP', 'CNPJ', 'UF', 'Cidade IBGE']]
     
     local_exp.rename(columns = {'Cidade IBGE' : 'Origem'}, inplace = True)
     
@@ -99,4 +99,50 @@ def formar_tabela_local_expedicao_gold():
     local_exp.to_excel('Data/Output/Gold/Local de Expedição.xlsx', index = False)
     
     return local_exp
+
+
+def formar_tabela_ov_gold():
+    
+    file_ov = 'Data/Output/Silver/BEX/dOV.csv'
+
+    ov = pd.read_csv(file_ov, encoding = 'latin-1', decimal = ',')
+    
+    ov['OV'] = ov['OV'].astype(str)
+    ov['Item OV'] = ov['Item OV'].astype(str)
+    
+    ov['OV-Item'] = ov['OV'] + '-' + ov['Item OV']
+    
+    ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
+           'Valor', 'Peso Líquido', 'Requisição Compra', 'Id Mot. Rec.',
+           'Id Centro', 'Id Local Exp.', 'UF Origem', 'Origem', 'Id Cliente',
+           'UF Destino', 'Destino', 'Id Itinerário', 'Grupo de Mercadorias',
+           'Id Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
+    
+    ov.to_excel('Data/Output/Gold/Ordem de Venda.xlsx', index = False)
+
+def formar_tabela_dt_gold():
+
+    file_dt = 'Data/Output/Silver/BEX/fDT.csv'
+    
+    dt = pd.read_csv(file_dt, encoding = 'latin-1', decimal = ',')
+    
+    file_nf = 'Data/Output/Gold/Nota Fiscal.xlsx'
+    
+    nf = pd.read_excel(file_nf)
+    
+    nf = nf.loc[:, ['OV', 'Item OV', 'Remessa', 'Item Rem']]
+    
+    nf.drop_duplicates(inplace = True)
+    
+    dt = dt.merge(nf, on = ['Remessa', 'Item Rem'], how = 'left')
+    
+    dt = dt.loc[:, ['DT', 'Remessa', 'Item Rem', 'OV', 'Item OV', 'Data de criação', 'Quantidade',
+           'Valor Frete Total', 'Peso KG', 'Item Superior', 'Id Categoria',
+           'Categoria', 'DT Agrupadora Pai', 'Id Transportador', 'Transportador',
+           'Grupo de Mercadorias']]
+    
+    dt.to_excel('Data/Output/Gold/Documento de Transporte.xlsx', index = False)
+    
+    return dt
+
 

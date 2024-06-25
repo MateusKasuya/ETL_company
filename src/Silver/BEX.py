@@ -1,5 +1,5 @@
 import pandas as pd
-from src.Bronze.BEX.carteira_vendas import formar_tabela_dim
+from src.Bronze.BEX.documentos_sd import formar_tabela_dim
 from src.Bronze.BEX.nota_fiscal import formar_tabela_nota_fiscal
 from src.Bronze.BEX.DT import formar_tabela_dt
 from src.Bronze.BEX.conta_frete import formar_tabela_conta_frete
@@ -30,13 +30,14 @@ def motivo_recusa():
 
 def centro():
 
-    colunas_centro = ['Id Centro', 'Centro', 'CNPJ Centro']
+    colunas_centro = ['Id Centro', 'Centro', 'CNPJ Centro', 'Endereço Centro']
 
     centro = formar_tabela_dim(colunas_uteis=colunas_centro)
 
     trocar_centro = {
         'Id Centro': 'Id',
-        'CNPJ Centro': 'CNPJ'
+        'CNPJ Centro': 'CNPJ',
+        'Endereço Centro' : 'Endereço'
     }
 
     centro.rename(columns=trocar_centro, inplace=True)
@@ -126,13 +127,12 @@ def cidade():
 def local_exp():
 
     colunas_local_exp = ['Id Local Exp.', 'Local Expedição', 'BP Local Expedição',
-                         'CNPJ Local Exp.', 'UF Origem', 'Origem', 'Zona Transp. Origem']
+                         'CNPJ Local Exp.', 'UF Origem', 'Origem']
 
     local_exp = formar_tabela_dim(colunas_uteis=colunas_local_exp)
 
     trocar_local_exp = {
         'UF Origem': 'UF',
-        'Zona Transp. Origem': 'Zona de Transporte',
         'CNPJ Local Exp.': 'CNPJ',
         'Id Local Exp.': 'Id',
         'BP Local Expedição': 'BP'
@@ -248,6 +248,7 @@ def contrato():
         'Item Contrato',
         'Pedido SalesForce',
         'Tipo Documento',
+        'Categoria Documento',
         'Data do Contrato',
         'Data Início Entrega',
         'Data Fim Entrega',
@@ -277,7 +278,9 @@ def contrato():
 
     contrato.rename(columns=trocar_contrato, inplace=True)
 
-    contrato = contrato[contrato['Quantidade'] > 0]
+    contrato = contrato[contrato['Categoria Documento'] == 'Contrato']
+    
+    contrato.drop(['Categoria Documento'], axis = 1, inplace = True)
 
     contrato['Data do Contrato'] = pd.to_datetime(
         contrato['Data do Contrato'], dayfirst=True)
@@ -292,7 +295,7 @@ def contrato():
     
     contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
     contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
-
+    
     contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcontrato.csv',
                     index=False, decimal=',', encoding='latin-1')
 
@@ -308,12 +311,13 @@ def ov():
         'Item OV',
         'Contrato Venda',
         'Item Contrato',
+        'Categoria Documento',
         'Tipo Documento',
         'Data da OV',
         'Qtde OV',
         'Valor OV',
         'Peso Liq. OV',
-        'Requisição de compra',
+        'Requisição Compra',
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
@@ -339,8 +343,14 @@ def ov():
     }
 
     ov.rename(columns=trocar_ov, inplace=True)
+    
+    cat_ov = ['Ordem', 'Devol.']
 
+    ov = ov[ov['Categoria Documento'].isin(cat_ov)]
+    
     ov = ov[ov['Quantidade'] > 0]
+    
+    ov.drop(['Categoria Documento'], axis = 1, inplace = True)
 
     ov['Data da OV'] = pd.to_datetime(
         ov['Data da OV'], dayfirst=True)
@@ -357,16 +367,14 @@ def ov():
     ov = ov.loc[:, [
         'OV', 'Item OV', 'Contrato-Item', 'Tipo',
                'Data da OV', 'Quantidade', 'Valor', 'Peso Líquido',
-               'Requisição de compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.',
+               'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.',
                'UF Origem', 'Origem', 'Id Cliente', 'UF Destino', 'Destino',
                'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto',
                'Obs N. Fiscal (text)', 'Rot Entrega (texto)'
         ]]
-
+    
     ov.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dOV.csv',
               index=False, decimal=',', encoding='latin-1')
-    ov.to_excel('Data/Output/Gold/Ordem de Venda.xlsx',
-              index=False)
 
     return ov
 
@@ -391,8 +399,13 @@ def nf():
     
     nf['Contrato-Item'] = nf['Contrato Venda'] + '-' + nf['Item Contrato']
     
+    nf['OV'] = nf['OV'].astype(str)
+    nf['Item OV'] = nf['Item OV'].astype(str)
+    
+    nf['OV-Item'] = nf['OV'] + '-' + nf['Item OV']
+    
     nf = nf.loc[:,
-        ['Contrato-Item', 'OV', 'Item OV', 'Data criação',
+        ['Contrato-Item', 'OV-Item', 'Data criação',
                'Tipo', 'Código status NFe', 'NF-e: Status Doc', 'Remessa', 'Item Rem',
                'Lote', 'Grupo de mercadorias', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
                'Cofins', 'ICMS', 'PIS', 'Peso KG']
@@ -437,8 +450,6 @@ def dt():
     
     dt.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fDT.csv',
               index=False, decimal=',', encoding='latin-1')
-    dt.to_excel('Data/Output/Gold/Documento de Transporte.xlsx',
-              index=False)
 
     return dt
 

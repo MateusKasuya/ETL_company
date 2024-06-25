@@ -40,6 +40,18 @@ def calendario():
     df['Hoje'] = [True if d[:13] == str(today) else False for d in df['Data'].astype(str)]
     df['Até Hoje'] = [True if d[:13] <= str(today) else False for d in df['Data'].astype(str)]
     
+    list_ano_safra = []
+    for i in df['Data']:
+        if str(i) <= '2023-03-31':
+            list_ano_safra.append('22/23')
+        elif str(i) <= '2024-03-31':
+            list_ano_safra.append('23/24')
+        elif str(i) <= '2025-03-31':
+            list_ano_safra.append('24/25')
+        else:
+            list_ano_safra.append('25/26')
+    df['Ano Safra'] = list_ano_safra
+    
     df.to_excel('Data/Output/Gold/Calendário.xlsx', index = False)
 
     return df
