@@ -118,6 +118,8 @@ def formar_tabela_cte_gold():
     
     cte['Tipo CTE'] = cte['Tipo CTE'].map(dict_tipo_cte)
     
+    cte['Data'] = pd.to_datetime(cte['Data'])
+    
     cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'UF Origem Expedidor', 'Remetente',
                       'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
                       'Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora', 'Data',

@@ -9,8 +9,7 @@ def formar_tabela_xml_cte():
 
     file_list = os.listdir(path)
 
-    df_cte = pd.read_csv(
-        'C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv', decimal=',', encoding='latin-1')
+    df_cte = pd.read_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv', decimal=',', encoding='latin-1')
 
     # Funções
 

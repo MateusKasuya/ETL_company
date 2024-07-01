@@ -70,7 +70,7 @@ def formar_tabela_contrato_gold():
     contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
            'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
            'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
-           'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Id Cliente',
+           'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem', 'Id Cliente', 'Destino', 'UF Destino',
            'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Obs Ped.Niv.Cab(txt)']]
     
     contrato.to_excel('Data/Output/Gold/Contrato.xlsx', index = False)
@@ -114,11 +114,13 @@ def formar_tabela_ov_gold():
     
     ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
            'Valor', 'Peso Líquido', 'Requisição Compra', 'Id Mot. Rec.',
-           'Id Centro', 'Id Local Exp.', 'UF Origem', 'Origem', 'Id Cliente',
-           'UF Destino', 'Destino', 'Id Itinerário', 'Grupo de Mercadorias',
+           'Id Centro', 'Id Local Exp.', 'Id Cliente',
+           'Id Itinerário', 'Grupo de Mercadorias',
            'Id Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
     
     ov.to_excel('Data/Output/Gold/Ordem de Venda.xlsx', index = False)
+    
+    return ov
 
 def formar_tabela_dt_gold():
 
@@ -130,13 +132,13 @@ def formar_tabela_dt_gold():
     
     nf = pd.read_excel(file_nf)
     
-    nf = nf.loc[:, ['OV', 'Item OV', 'Remessa', 'Item Rem']]
+    nf = nf.loc[:, ['OV-Item', 'Remessa', 'Item Rem']]
     
     nf.drop_duplicates(inplace = True)
     
     dt = dt.merge(nf, on = ['Remessa', 'Item Rem'], how = 'left')
     
-    dt = dt.loc[:, ['DT', 'Remessa', 'Item Rem', 'OV', 'Item OV', 'Data de criação', 'Quantidade',
+    dt = dt.loc[:, ['DT', 'Remessa', 'Item Rem', 'OV-Item', 'Data de criação', 'Quantidade',
            'Valor Frete Total', 'Peso KG', 'Item Superior', 'Id Categoria',
            'Categoria', 'DT Agrupadora Pai', 'Id Transportador', 'Transportador',
            'Grupo de Mercadorias']]

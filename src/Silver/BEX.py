@@ -260,7 +260,11 @@ def contrato():
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
+        'Origem',
+        'UF Origem',
         'Id Cliente',
+        'Destino',
+        'UF Destino',
         'Id Itinerário',
         'Grupo de Mercadorias',
         'Id Produto',
@@ -321,11 +325,11 @@ def ov():
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
-        'UF Origem',
         'Origem',
+        'UF Origem',
         'Id Cliente',
-        'UF Destino',
         'Destino',
+        'UF Destino',
         'Id Itinerário',
         'Grupo de Mercadorias',
         'Id Produto',
@@ -348,7 +352,7 @@ def ov():
 
     ov = ov[ov['Categoria Documento'].isin(cat_ov)]
     
-    ov = ov[ov['Quantidade'] > 0]
+    ov = ov[ov['Quantidade'] != 0]
     
     ov.drop(['Categoria Documento'], axis = 1, inplace = True)
 
@@ -368,7 +372,7 @@ def ov():
         'OV', 'Item OV', 'Contrato-Item', 'Tipo',
                'Data da OV', 'Quantidade', 'Valor', 'Peso Líquido',
                'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.',
-               'UF Origem', 'Origem', 'Id Cliente', 'UF Destino', 'Destino',
+               'Id Cliente',
                'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto',
                'Obs N. Fiscal (text)', 'Rot Entrega (texto)'
         ]]
