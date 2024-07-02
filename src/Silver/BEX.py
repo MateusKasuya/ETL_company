@@ -177,13 +177,10 @@ def cliente():
     mask = (cliente['Id'] == 1000892) & (cliente['Destino'] == 'MONTE ALEGRE DO PIAU')
     cliente = cliente[~mask]
     
-    cliente = cliente.query('Id != id_cliente and Destino != cidade_cliente')
-
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
 
     return cliente
-
 
 # Produto
 
