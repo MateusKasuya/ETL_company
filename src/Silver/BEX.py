@@ -173,6 +173,11 @@ def cliente():
     }
 
     cliente.rename(columns=trocar_cliente, inplace=True)
+    
+    mask = (cliente['Id'] == 1000892) & (cliente['Destino'] == 'MONTE ALEGRE DO PIAU')
+    cliente = cliente[~mask]
+    
+    cliente = cliente.query('Id != id_cliente and Destino != cidade_cliente')
 
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
@@ -371,8 +376,8 @@ def ov():
     ov = ov.loc[:, [
         'OV', 'Item OV', 'Contrato-Item', 'Tipo',
                'Data da OV', 'Quantidade', 'Valor', 'Peso Líquido',
-               'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.',
-               'Id Cliente',
+               'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem',
+               'Id Cliente', 'Destino', 'UF Destino',
                'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto',
                'Obs N. Fiscal (text)', 'Rot Entrega (texto)'
         ]]

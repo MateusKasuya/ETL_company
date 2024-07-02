@@ -114,7 +114,7 @@ def formar_tabela_ov_gold():
     
     ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
            'Valor', 'Peso Líquido', 'Requisição Compra', 'Id Mot. Rec.',
-           'Id Centro', 'Id Local Exp.', 'Id Cliente',
+           'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem', 'Id Cliente', 'Destino', 'UF Destino',
            'Id Itinerário', 'Grupo de Mercadorias',
            'Id Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
     
