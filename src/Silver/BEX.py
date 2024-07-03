@@ -41,7 +41,12 @@ def centro():
     }
 
     centro.rename(columns=trocar_centro, inplace=True)
+    
+    centro['Id'] = centro['Id'].astype(str)
+    centro['CNPJ'] = centro['CNPJ'].astype(str) 
 
+    centro.drop_duplicates(inplace = True)
+    
     centro.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcentro.csv',
                   index=False, decimal=',', encoding='latin-1')
     centro.to_excel('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Gold/Centro.xlsx',
@@ -245,67 +250,69 @@ def itinerario():
 
 def contrato():
 
-    colunas_contrato = [
-        'Contrato Venda',
-        'Item Contrato',
-        'Pedido SalesForce',
-        'Tipo Documento',
-        'Categoria Documento',
-        'Data do Contrato',
-        'Data Início Entrega',
-        'Data Fim Entrega',
-        'Qtde Contrato',
-        'Valor Contrato',
-        'Peso Liq. Contrato',
-        'Moeda',
-        'Incoterms',
-        'Id Mot. Rec.',
-        'Id Centro',
-        'Id Local Exp.',
-        'Origem',
-        'UF Origem',
-        'Id Cliente',
-        'Destino',
-        'UF Destino',
-        'Id Itinerário',
-        'Grupo de Mercadorias',
-        'Id Produto',
-        'Obs Ped.Niv.Cab(txt)'
-    ]
-
-    contrato = formar_tabela_dim(colunas_uteis=colunas_contrato)
-
-    trocar_contrato = {
-        'Tipo Documento': 'Tipo',
-        'Qtde Contrato': 'Quantidade',
-        'Valor Contrato': 'Valor',
-        'Peso Liq. Contrato': 'Peso Líquido'
-    }
-
-    contrato.rename(columns=trocar_contrato, inplace=True)
-
-    contrato = contrato[contrato['Categoria Documento'] == 'Contrato']
+        colunas_contrato = [
+            'Contrato Venda',
+            'Item Contrato',
+            'Pedido SalesForce',
+            'Tipo Documento',
+            'Categoria Documento',
+            'Data do Contrato',
+            'Data Início Entrega',
+            'Data Fim Entrega',
+            'Qtde Contrato',
+            'Valor Contrato',
+            'Peso Liq. Contrato',
+            'Moeda',
+            'Incoterms',
+            'Id Mot. Rec.',
+            'Id Centro',
+            'Id Local Exp.',
+            'Origem',
+            'UF Origem',
+            'Id Cliente',
+            'Destino',
+            'UF Destino',
+            'Id Itinerário',
+            'Grupo de Mercadorias',
+            'Id Produto',
+            'Obs Ped.Niv.Cab(txt)'
+        ]
     
-    contrato.drop(['Categoria Documento'], axis = 1, inplace = True)
+        contrato = formar_tabela_dim(colunas_uteis=colunas_contrato)
+    
+        trocar_contrato = {
+            'Tipo Documento': 'Tipo',
+            'Qtde Contrato': 'Quantidade',
+            'Valor Contrato': 'Valor',
+            'Peso Liq. Contrato': 'Peso Líquido'
+        }
+    
+        contrato.rename(columns=trocar_contrato, inplace=True)
+    
+        contrato = contrato[contrato['Categoria Documento'] == 'Contrato']
+        
+        contrato = contrato[contrato['Quantidade'] != 0]
+        
+        contrato.drop(['Categoria Documento'], axis = 1, inplace = True)
+    
+        contrato['Data do Contrato'] = pd.to_datetime(
+            contrato['Data do Contrato'], dayfirst=True)
+        contrato['Data Início Entrega'] = pd.to_datetime(
+            contrato['Data Início Entrega'], dayfirst=True)
+        contrato['Data Fim Entrega'] = pd.to_datetime(
+            contrato['Data Fim Entrega'], dayfirst=True)
+        
+        contrato['Quantidade'] = contrato['Quantidade'].astype(float)
+        contrato['Valor'] = contrato['Valor'].astype(float)
+        contrato['Peso Líquido'] = contrato['Peso Líquido'].astype(float)
+        
+        contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
+        contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
+        
+        contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcontrato.csv',
+                        index=False, decimal=',', encoding='latin-1')
 
-    contrato['Data do Contrato'] = pd.to_datetime(
-        contrato['Data do Contrato'], dayfirst=True)
-    contrato['Data Início Entrega'] = pd.to_datetime(
-        contrato['Data Início Entrega'], dayfirst=True)
-    contrato['Data Fim Entrega'] = pd.to_datetime(
-        contrato['Data Fim Entrega'], dayfirst=True)
-    
-    contrato['Quantidade'] = contrato['Quantidade'].astype(float)
-    contrato['Valor'] = contrato['Valor'].astype(float)
-    contrato['Peso Líquido'] = contrato['Peso Líquido'].astype(float)
-    
-    contrato['Contrato Venda'] = contrato['Contrato Venda'].astype(str)
-    contrato['Item Contrato'] = contrato['Item Contrato'].astype(str)
-    
-    contrato.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcontrato.csv',
-                    index=False, decimal=',', encoding='latin-1')
-
-    return contrato
+        return contrato
 
 
 # OV
@@ -413,7 +420,7 @@ def nf():
     nf = nf.loc[:,
         ['Contrato-Item', 'OV-Item', 'Data criação',
                'Tipo', 'Código status NFe', 'NF-e: Status Doc', 'Remessa', 'Item Rem',
-               'Lote', 'Grupo de mercadorias', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
+               'Lote', 'Grupo de mercadorias', 'Incoterms', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
                'Cofins', 'ICMS', 'PIS', 'Peso KG']
         ]
 

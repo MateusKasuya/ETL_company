@@ -38,6 +38,7 @@ def formar_tabela_nota_fiscal():
         'Item Rem',
         'Lote',
         'Grupo de mercadorias',
+        'Incoterms',
         'Nº NF',
         'Chave de Acesso - NF',
         'Quantidade',
