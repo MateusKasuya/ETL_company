@@ -182,6 +182,12 @@ def cliente():
     mask = (cliente['Id'] == 1000892) & (cliente['Destino'] == 'MONTE ALEGRE DO PIAU')
     cliente = cliente[~mask]
     
+    mask = (cliente['Id'] == 2346077) & (cliente['Cliente'] == 'DORAIR ANDRE DOGNANI')
+    cliente = cliente[~mask]
+    
+    mask = (cliente['Id'] == 1618750) & (cliente['Destino'] == 'FORMOSA DO RIO PRETO')
+    cliente = cliente[~mask]
+    
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
 

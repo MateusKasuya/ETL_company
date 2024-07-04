@@ -109,7 +109,7 @@ def formar_tabela_cte_gold():
             list_grupo_merc.append('Outros')
             
     cte['Grupo de Mercadorias'] = list_grupo_merc
-    
+            
     dict_tipo_cte = {
         0 : 'Normal',
         1 : 'Complementar',
