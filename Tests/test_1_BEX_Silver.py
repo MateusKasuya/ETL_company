@@ -1,5 +1,6 @@
 from src.Silver.BEX import *
 
+
 def test_centro():
 
     test_centro = centro()
@@ -106,23 +107,28 @@ def test_UF():
     unique_id_UF = len(test_UF['UF'].unique()) - len(test_UF.index)
 
     assert unique_id_UF == 0
-    
-    
+
+
 def test_nf():
-    
+
     test_nf = nf()
-    
+
     sum_nf = sum(test_nf['Valor'])
-    
+
     assert sum_nf > 0
-    
+
 
 def test_dt():
-    
+
     test_dt = dt()
-    
+
     sum_dt = sum(test_dt['Quantidade'])
-    
+
     assert sum_dt > 0
-    
-    
+
+
+def test_transf():
+
+    test_transf = transferencia()
+
+    assert pd.api.types.is_datetime64_any_dtype(test_transf['Data']) == True
