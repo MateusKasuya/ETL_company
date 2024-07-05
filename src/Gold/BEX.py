@@ -156,9 +156,17 @@ def formar_tabela_ov_gold():
     ov.drop(['Destino'], axis=1, inplace=True)
 
     ov.rename(columns={'Cidade IBGE': 'Destino'}, inplace=True)
+    
+    file_contrato = 'Data/Output/Gold/Contrato.xlsx'
+    
+    contrato = pd.read_excel(file_contrato)
+    
+    contrato = contrato.loc[:, ['Contrato-Item', 'Valor Frete Pedido']]
 
+    ov = ov.merge(contrato, on = 'Contrato-Item', how = 'left')
+    
     ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
-                    'Valor', 'Peso Líquido', 'Requisição Compra', 'Id Mot. Rec.',
+                    'Valor', 'Peso Líquido', 'Valor Frete Pedido', 'Requisição Compra', 'Id Mot. Rec.',
                     'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem', 'Id Cliente', 'Destino', 'UF Destino',
                     'Id Itinerário', 'Grupo de Mercadorias',
                     'Id Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
@@ -167,7 +175,47 @@ def formar_tabela_ov_gold():
 
     return ov
 
+def formar_tabela_nf_gold():
 
+    file_nf = 'Data/Output/Gold/Nota Fiscal.xlsx'
+    
+    nf = pd.read_excel(file_nf)
+    
+    file_ov = 'Data/Output/Gold/Ordem de Venda.xlsx'
+    
+    ov = pd.read_excel(file_ov)
+    
+    ov = ov.loc[:, ['OV-Item',
+                    'Id Local Exp.', 'Origem', 'UF Origem',
+                    'Id Cliente', 'Destino', 'UF Destino', 'Valor Frete Pedido']]
+    
+    nf = nf.merge(ov, on = 'OV-Item', how = 'left')
+    
+    file_lexp = 'Data/Output/Gold/Local de Expedição.xlsx'
+    
+    local_exp = pd.read_excel(file_lexp)
+    
+    local_exp = local_exp.loc[:, ['Id', 'Local Expedição']]
+    
+    nf = nf.merge(local_exp, left_on = 'Id Local Exp.', right_on = 'Id', how = 'left')
+    
+    file_cliente = 'Data/Output/Gold/Cliente.xlsx'
+    
+    cliente = pd.read_excel(file_cliente)
+    
+    cliente = cliente.loc[:, ['Id', 'Cliente']]
+    
+    nf = nf.merge(cliente, left_on = 'Id Cliente', right_on = 'Id', how = 'left')
+    
+    nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Data criação', 'Tipo', 'Código status NFe',
+           'NF-e: Status Doc', 'Remessa', 'Item Rem', 'Lote',
+           'Grupo de mercadorias', 'Incoterms', 'Nº NF', 'Chave de Acesso - NF',
+           'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem',
+           'Id Cliente', 'Cliente', 'Destino', 'UF Destino',
+           'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS', 'Peso KG', 'Valor Frete Pedido']]
+    
+    return nf
+    
 def formar_tabela_dt_gold():
 
     file_dt = 'Data/Output/Silver/BEX/fDT.csv'
@@ -220,6 +268,8 @@ def formar_tabela_transf_gold():
 
     transf = transf.loc[:, ['Pedido Transf.', 'Data', 'Centro fornecedor', 'Origem', 'UF Origem', 'Recebedor',
                             'Destino', 'UF Destino', 'Grupo de mercadorias']]
+    
+    transf['Data'] = pd.to_datetime(transf['Data'])
 
     transf.to_excel('Data/Output/Gold/Transferência.xlsx', index=False)
     

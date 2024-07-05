@@ -221,6 +221,14 @@ def formar_tabela_xml_cte():
     cte['Transportadora'] = transportadora_tratado
 
     cte['Transportadora'] = cte['Transportadora'].str.title()
+    
+    # CNPJ Transportadora
+
+    cnpj_transportadora = nested_tag(emissor, 'CNPJ')
+
+    cnpj_transportadora_tratado = tratar_nested_tag(cnpj_transportadora, 'CNPJ')
+
+    cte['CNPJ Transportadora'] = cnpj_transportadora_tratado
 
     # Data Emissão
 

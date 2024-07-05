@@ -10,6 +10,7 @@ def formar_tabela_nota_fiscal():
 
     header = {
         'Contrato Venda SD': 'Contrato Venda',
+        'Nº pedido do cliente' : 'Pedido SalesForce',
         'Tp.doc.faturamento': 'Tipo',
         'Fornecimento': 'Remessa',
         'Nº NF 9 posições': 'Nº NF',
@@ -20,7 +21,11 @@ def formar_tabela_nota_fiscal():
         '\nVlr COFINS (NF)': 'Cofins',
         '\nVlr ICMS (NF)': 'ICMS',
         '\nVlr PIS (NF)': 'PIS',
-        '\nPeso Líquido NF': 'Peso KG'
+        '\nPeso Líquido NF': 'Peso KG',
+        'Material' : 'Id Produto',
+        'Unnamed: 17' : 'Produto',
+        'Centro' : 'Id Centro',
+        'Unnamed: 19' : 'Centro'  
     }
 
     nf.rename(columns=header, inplace=True)
@@ -28,16 +33,22 @@ def formar_tabela_nota_fiscal():
     ordem_colunas = [
         'Contrato Venda',
         'Item Contrato',
+        'Pedido SalesForce',
         'OV',
         'Item OV',
         'Data criação',
+        'Hora da criação',
         'Tipo',
         'Código status NFe',
         'NF-e: Status Doc',
+        'Id Centro',
+        'Centro',
         'Remessa',
         'Item Rem',
-        'Lote',
         'Grupo de mercadorias',
+        'Id Produto',
+        'Produto',
+        'Lote',
         'Incoterms',
         'Nº NF',
         'Chave de Acesso - NF',

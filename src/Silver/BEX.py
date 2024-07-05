@@ -191,6 +191,10 @@ def cliente():
     mask = (cliente['Id'] == 1618750) & (
         cliente['Destino'] == 'FORMOSA DO RIO PRETO')
     cliente = cliente[~mask]
+    
+    mask = (cliente['Id'] == 2297057) & (
+        cliente['Cliente'] == 'SAMUEL ANDRE DOGNANI')
+    cliente = cliente[~mask]
 
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
@@ -429,10 +433,12 @@ def nf():
     nf['OV-Item'] = nf['OV'] + '-' + nf['Item OV']
 
     nf = nf.loc[:,
-                ['Contrato-Item', 'OV-Item', 'Data criação',
-                 'Tipo', 'Código status NFe', 'NF-e: Status Doc', 'Remessa', 'Item Rem',
-                 'Lote', 'Grupo de mercadorias', 'Incoterms', 'Nº NF', 'Chave de Acesso - NF', 'Quantidade', 'Valor',
-                 'Cofins', 'ICMS', 'PIS', 'Peso KG']
+                ['Contrato-Item', 'OV-Item', 'Pedido SalesForce',
+                       'Data criação', 'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
+                       'Id Centro', 'Centro', 'Remessa', 'Item Rem', 'Grupo de mercadorias',
+                       'Id Produto', 'Produto', 'Lote', 'Incoterms', 'Nº NF',
+                       'Chave de Acesso - NF', 'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS',
+                       'Peso KG' ]
                 ]
 
     nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',

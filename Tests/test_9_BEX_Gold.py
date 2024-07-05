@@ -1,4 +1,4 @@
-from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold
+from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold, formar_tabela_nf_gold
 import pandas as pd
 
 
@@ -47,6 +47,14 @@ def test_ov_gold():
     max_value = max(ov['OV-Item'].value_counts())
 
     assert max_value == 1
+    
+def test_nf_gold():
+    
+    nf = formar_tabela_nf_gold()
+    
+    sum_nf = sum(nf['Valor'])
+
+    assert sum_nf > 0
 
 
 def test_dt_gold():
