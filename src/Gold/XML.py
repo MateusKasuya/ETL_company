@@ -120,9 +120,9 @@ def formar_tabela_cte_gold():
     
     cte['Data'] = pd.to_datetime(cte['Data'])
     
-    cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'UF Origem Expedidor', 'Remetente',
-                      'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
-                      'Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora', 'Data',
+    cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'CNPJ/CPF Expedidor', 'UF Origem Expedidor', 'Remetente', 'CNPJ/CPF Remetente',
+                      'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'CNPJ/CPF Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
+                      'Destinatário', 'CNPJ/CPF Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora','CNPJ Transportadora', 'Data',
                       'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Produto','Grupo de Mercadorias',
                       'Tipo CTE']]
             

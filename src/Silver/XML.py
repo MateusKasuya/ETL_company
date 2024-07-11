@@ -93,6 +93,28 @@ def formar_tabela_xml_cte():
     cte['Expedidor'] = nome_expedidor_tratado
 
     cte['Expedidor'] = cte['Expedidor'].str.title()
+    
+    # CNPJ/CPF Expedidor
+    
+    cnpj = nested_tag(expedidor, 'CNPJ')
+    
+    cnpj_tratado = tratar_nested_tag(cnpj, 'CNPJ')
+    
+    cpf = nested_tag(expedidor, 'CPF')
+    
+    cpf_tratado = tratar_nested_tag(cpf, 'CPF')
+    
+    list_cnpj = []
+    
+    for i in range(len(cnpj_tratado)):
+        
+        if cnpj_tratado[i] == '':           
+            list_cnpj.append(cpf_tratado[i])
+        
+        else:
+            list_cnpj.append(cnpj_tratado[i])
+            
+    cte['CNPJ/CPF Expedidor'] = list_cnpj
 
     # Origem Expedidor
 
@@ -125,6 +147,28 @@ def formar_tabela_xml_cte():
     cte['Remetente'] = nome_remetente_tratado
 
     cte['Remetente'] = cte['Remetente'].str.title()
+    
+    # CNPJ/CPF Remetente
+    
+    cnpj = nested_tag(remetente, 'CNPJ')
+    
+    cnpj_tratado = tratar_nested_tag(cnpj, 'CNPJ')
+    
+    cpf = nested_tag(remetente, 'CPF')
+    
+    cpf_tratado = tratar_nested_tag(cpf, 'CPF')
+    
+    list_cnpj = []
+    
+    for i in range(len(cnpj_tratado)):
+        
+        if cnpj_tratado[i] == '':           
+            list_cnpj.append(cpf_tratado[i])
+        
+        else:
+            list_cnpj.append(cnpj_tratado[i])
+            
+    cte['CNPJ/CPF Remetente'] = list_cnpj
 
     # Origem Remetente
 
@@ -157,6 +201,28 @@ def formar_tabela_xml_cte():
     cte['Recebedor'] = nome_recebedor_tratado
 
     cte['Recebedor'] = cte['Recebedor'].str.title()
+    
+    # CNPJ/CPF Recebedor
+    
+    cnpj = nested_tag(recebedor, 'CNPJ')
+    
+    cnpj_tratado = tratar_nested_tag(cnpj, 'CNPJ')
+    
+    cpf = nested_tag(recebedor, 'CPF')
+    
+    cpf_tratado = tratar_nested_tag(cpf, 'CPF')
+    
+    list_cnpj = []
+    
+    for i in range(len(cnpj_tratado)):
+        
+        if cnpj_tratado[i] == '':           
+            list_cnpj.append(cpf_tratado[i])
+        
+        else:
+            list_cnpj.append(cnpj_tratado[i])
+            
+    cte['CNPJ/CPF Recebedor'] = list_cnpj
 
     # Destino Recebedor
 
@@ -189,6 +255,28 @@ def formar_tabela_xml_cte():
     cte['Destinatário'] = nome_destinatario_tratado
 
     cte['Destinatário'] = cte['Destinatário'].str.title()
+    
+    # CNPJ/CPF Destinatário
+    
+    cnpj = nested_tag(destinatario, 'CNPJ')
+    
+    cnpj_tratado = tratar_nested_tag(cnpj, 'CNPJ')
+    
+    cpf = nested_tag(destinatario, 'CPF')
+    
+    cpf_tratado = tratar_nested_tag(cpf, 'CPF')
+    
+    list_cnpj = []
+    
+    for i in range(len(cnpj_tratado)):
+        
+        if cnpj_tratado[i] == '':           
+            list_cnpj.append(cpf_tratado[i])
+        
+        else:
+            list_cnpj.append(cnpj_tratado[i])
+            
+    cte['CNPJ/CPF Destinatário'] = list_cnpj
 
     # Destino Destinatário
 
@@ -307,6 +395,28 @@ def formar_tabela_xml_cte():
     frete_tratado = tratar_nested_tag(frete, 'vRec')
 
     cte['Valor Frete Total'] = frete_tratado
+    
+    # Valor Imposto
+    
+    imposto = appendar_xml_lista('vTotTrib')
+    
+    imposto_tratado = tratar_nested_tag(imposto, 'vTotTrib')
+    
+    icms = appendar_xml_lista('vICMS')
+    
+    icms_tratado = tratar_nested_tag(icms, 'vICMS')
+    
+    list_imposto = []
+    
+    for i in range(len(imposto_tratado)):
+        
+        if imposto_tratado[i] == '':           
+            list_imposto.append(icms_tratado[i])
+        
+        else:
+            list_imposto.append(imposto_tratado[i])
+            
+    cte['Valor Imposto'] = list_imposto
 
     # Produto
 
@@ -336,6 +446,12 @@ def formar_tabela_xml_cte():
     cte_final['Valor Frete Total'] = cte_final['Valor Frete Total'].replace('', np.nan)
     
     cte_final['Valor Frete Total'] = cte_final['Valor Frete Total'].astype(float)
+    
+    cte_final['Valor Imposto'] = cte_final['Valor Imposto'].replace('', np.nan)
+    
+    cte_final['Valor Imposto'] = cte_final['Valor Imposto'].astype(float)
+    
+    cte_final['Valor Frete s/ Imposto'] = cte_final['Valor Frete Total'] - cte_final['Valor Imposto']
     
     cte_final['Peso Volume'] = cte_final['Peso Volume'].replace('', np.nan)
     

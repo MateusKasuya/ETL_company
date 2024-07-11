@@ -177,9 +177,9 @@ def formar_tabela_ov_gold():
 
 def formar_tabela_nf_gold():
 
-    file_nf = 'Data/Output/Gold/Nota Fiscal.xlsx'
+    file_nf = 'Data/Output/Silver/BEX/fNF.csv'
     
-    nf = pd.read_excel(file_nf)
+    nf = pd.read_csv(file_nf, encoding = 'latin-1', decimal = ',', low_memory= False)
     
     file_ov = 'Data/Output/Gold/Ordem de Venda.xlsx'
     
@@ -207,12 +207,15 @@ def formar_tabela_nf_gold():
     
     nf = nf.merge(cliente, left_on = 'Id Cliente', right_on = 'Id', how = 'left')
     
-    nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Data criação', 'Tipo', 'Código status NFe',
-           'NF-e: Status Doc', 'Remessa', 'Item Rem', 'Lote',
-           'Grupo de mercadorias', 'Incoterms', 'Nº NF', 'Chave de Acesso - NF',
-           'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem',
-           'Id Cliente', 'Cliente', 'Destino', 'UF Destino',
-           'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS', 'Peso KG', 'Valor Frete Pedido']]
+    nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Pedido SalesForce', 'Data criação',
+           'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
+           'Id Centro', 'Centro', 'Remessa', 'Item Rem', 'Grupo de mercadorias',
+           'Id Produto', 'Produto', 'Lote', 'Incoterms', 'Nº NF',
+           'Chave de Acesso - NF', 'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem', 'Id Cliente', 'Cliente',
+           'Destino', 'UF Destino', 'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS',
+           'Peso KG', 'Valor Frete Pedido']]
+    
+    nf.to_excel('Data/Output/Gold/Nota Fiscal.xlsx', index = False)
     
     return nf
     

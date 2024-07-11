@@ -195,6 +195,16 @@ def cliente():
     mask = (cliente['Id'] == 2297057) & (
         cliente['Cliente'] == 'SAMUEL ANDRE DOGNANI')
     cliente = cliente[~mask]
+    
+    mask = (cliente['Id'] == 1000057) & (
+        cliente['Cliente'] == 'AGREX DO BRASIL LTDA')
+    cliente = cliente[~mask]
+    
+    mask = (cliente['Id'] == 2014500) & (
+        cliente['Cliente'] == 'DORAIR ANDRE DOGNANI')
+    cliente = cliente[~mask]
+    
+    
 
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
@@ -443,8 +453,6 @@ def nf():
 
     nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',
               index=False, decimal=',', encoding='latin-1')
-    nf.to_excel('Data/Output/Gold/Nota Fiscal.xlsx',
-                index=False)
 
     return nf
 
