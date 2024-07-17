@@ -154,6 +154,10 @@ def local_exp():
     local_exp['CNPJ'] = local_exp['CNPJ'].str.replace('CPF', '')
     local_exp['CNPJ'] = local_exp['CNPJ'].str.replace('-', '')
     local_exp['CNPJ'] = local_exp['CNPJ'].str.strip()
+    
+    # mask = (local_exp['Id'] == '2165') & (
+    #     local_exp['UF'] == 'MA')
+    # local_exp = local_exp[~mask]
 
     local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dlocal_expedição.csv',
                      index=False, decimal=',', encoding='latin-1')
@@ -204,8 +208,14 @@ def cliente():
         cliente['Cliente'] == 'DORAIR ANDRE DOGNANI')
     cliente = cliente[~mask]
     
+    mask = (cliente['Id'] == 2313906) & (
+        cliente['Destino'] == 'PIUM')
+    cliente = cliente[~mask]
     
-
+    mask = (cliente['Id'] == 1999126) & (
+        cliente['Destino'] == 'BAIXA GRANDE DO RIBEIRO')
+    cliente = cliente[~mask]
+    
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
 

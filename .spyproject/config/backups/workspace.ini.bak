@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['src\\Bronze\\BEX\\documentos_sd.py', 'src\\Silver\\BEX.py', 'src\\Gold\\BEX.py', 'src\\Silver\\XML.py', 'src\\Bronze\\BEX\\nota_fiscal.py', 'Tests\\test_9_BEX_Gold.py', 'Tests\\test_1_BEX_Silver.py', 'src\\Gold\\XML.py']
+recent_files = ['src\\Silver\\XML.py', 'src\\Gold\\XML.py', 'src\\Silver\\BEX.py', 'src\\Silver\\IBGE.py', 'src\\Silver\\rotas_google_maps.py']
 
 [main]
 version = 0.2.0
