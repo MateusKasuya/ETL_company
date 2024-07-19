@@ -132,3 +132,14 @@ def test_transf():
     test_transf = transferencia()
 
     assert pd.api.types.is_datetime64_any_dtype(test_transf['Data']) == True
+
+
+def test_gerencial_frete():
+
+    test_gerencial_frete = gerencial_frete()
+
+    unique_id_gerencial_frete = len(test_gerencial_frete.drop_duplicates(
+        subset=['Documento Contábil',
+                'Item Doc Contábil'])) - len(test_gerencial_frete.index)
+
+    assert unique_id_gerencial_frete == 0

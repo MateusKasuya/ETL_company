@@ -5,6 +5,7 @@ from src.Bronze.BEX.DT import formar_tabela_dt
 from src.Bronze.BEX.conta_frete import formar_tabela_conta_frete
 from src.Bronze.BEX.estoque import formar_tabela_estoque
 from src.Bronze.BEX.transferencia import formar_tabela_transf
+from src.Bronze.BEX.gerencial_frete import formar_gerencial_frete
 
 # Motivo de Recusas
 
@@ -154,10 +155,6 @@ def local_exp():
     local_exp['CNPJ'] = local_exp['CNPJ'].str.replace('CPF', '')
     local_exp['CNPJ'] = local_exp['CNPJ'].str.replace('-', '')
     local_exp['CNPJ'] = local_exp['CNPJ'].str.strip()
-    
-    # mask = (local_exp['Id'] == '2165') & (
-    #     local_exp['UF'] == 'MA')
-    # local_exp = local_exp[~mask]
 
     local_exp.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dlocal_expedição.csv',
                      index=False, decimal=',', encoding='latin-1')
@@ -184,38 +181,8 @@ def cliente():
 
     cliente.rename(columns=trocar_cliente, inplace=True)
 
-    mask = (cliente['Id'] == 1000892) & (
-        cliente['Destino'] == 'MONTE ALEGRE DO PIAU')
-    cliente = cliente[~mask]
+    cliente.drop_duplicates(subset='Id', keep='last', inplace=True)
 
-    mask = (cliente['Id'] == 2346077) & (
-        cliente['Cliente'] == 'DORAIR ANDRE DOGNANI')
-    cliente = cliente[~mask]
-
-    mask = (cliente['Id'] == 1618750) & (
-        cliente['Destino'] == 'FORMOSA DO RIO PRETO')
-    cliente = cliente[~mask]
-    
-    mask = (cliente['Id'] == 2297057) & (
-        cliente['Cliente'] == 'SAMUEL ANDRE DOGNANI')
-    cliente = cliente[~mask]
-    
-    mask = (cliente['Id'] == 1000057) & (
-        cliente['Cliente'] == 'AGREX DO BRASIL LTDA')
-    cliente = cliente[~mask]
-    
-    mask = (cliente['Id'] == 2014500) & (
-        cliente['Cliente'] == 'DORAIR ANDRE DOGNANI')
-    cliente = cliente[~mask]
-    
-    mask = (cliente['Id'] == 2313906) & (
-        cliente['Destino'] == 'PIUM')
-    cliente = cliente[~mask]
-    
-    mask = (cliente['Id'] == 1999126) & (
-        cliente['Destino'] == 'BAIXA GRANDE DO RIBEIRO')
-    cliente = cliente[~mask]
-    
     cliente.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dcliente.csv',
                    index=False, decimal=',', encoding='latin-1')
 
@@ -454,11 +421,11 @@ def nf():
 
     nf = nf.loc[:,
                 ['Contrato-Item', 'OV-Item', 'Pedido SalesForce',
-                       'Data criação', 'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
-                       'Id Centro', 'Centro', 'Remessa', 'Item Rem', 'Grupo de mercadorias',
-                       'Id Produto', 'Produto', 'Lote', 'Incoterms', 'Nº NF',
-                       'Chave de Acesso - NF', 'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS',
-                       'Peso KG' ]
+                 'Data criação', 'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
+                 'Id Centro', 'Centro', 'Remessa', 'Item Rem', 'Grupo de mercadorias',
+                 'Id Produto', 'Produto', 'Lote', 'Incoterms', 'Nº NF',
+                 'Chave de Acesso - NF', 'Quantidade', 'Valor', 'Cofins', 'ICMS', 'PIS',
+                 'Peso KG']
                 ]
 
     nf.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/fNF.csv',
@@ -569,3 +536,39 @@ def transferencia():
                   index=False, decimal=',', encoding='latin-1')
 
     return transf
+
+
+# Gerencial Frete
+
+def gerencial_frete():
+
+    frete = formar_gerencial_frete()
+
+    frete['Data de lançamento'] = pd.to_datetime(
+        frete['Data de lançamento'], dayfirst=True)
+    frete['Data Compensação'] = pd.to_datetime(
+        frete['Data Compensação'], dayfirst=True)
+    frete['Data Vencimento'] = pd.to_datetime(
+        frete['Data Vencimento'], dayfirst=True)
+
+    frete['Frete'] = frete['Frete'].astype(float)
+    frete['Volume Receita'] = frete['Volume Receita'].astype(float)
+    frete['Gross Sales'] = frete['Gross Sales'].astype(float)
+    frete['Net Sales'] = frete['Net Sales'].astype(float)
+    
+    frete['OV-Item'] = frete['OV'].astype(str) + '-' + frete['Item OV'].astype(str)
+
+    ordem_colunas = [
+        'Contrato Venda', 'Item Contrato', 'OV-Item',
+               'Grupo de Mercadorias', 'Incoterms', 'Frete', 'Volume Receita',
+               'Gross Sales', 'Net Sales', 'Classe Contas', 'Documento Contábil',
+               'Item Doc Contábil', 'Data de lançamento', 'Data Compensação',
+               'Data Vencimento'
+        ]
+    
+    frete = frete.loc[:, ordem_colunas]
+
+    frete.to_csv('Data/Output/Silver/BEX/fgerencial_frete.csv',
+                 index=False, decimal=',', encoding='latin-1')
+
+    return frete

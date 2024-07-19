@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 def main_dt():
@@ -41,8 +40,8 @@ def main_dt():
 
     dt = dt.loc[:, ordem_colunas]
 
-    dt.replace('#', np.nan, inplace=True)
-    dt.replace('Não atribuído', np.nan, inplace=True)
+    dt.replace('#', None, inplace=True)
+    dt.replace('Não atribuído', None, inplace=True)
 
     return dt
 

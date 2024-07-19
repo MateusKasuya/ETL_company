@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 def main_estoque():
@@ -40,7 +39,7 @@ def main_estoque():
 
     estoque = estoque.loc[:, ordem_colunas]
 
-    estoque.replace('#', np.nan, inplace=True)
+    estoque.replace('#', None, inplace=True)
 
     return estoque
 

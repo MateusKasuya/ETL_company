@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 def formar_tabela_conta_frete():
@@ -16,6 +15,6 @@ def formar_tabela_conta_frete():
 
     conta_frete.rename(columns=header, inplace=True)
     
-    conta_frete.replace('#', np.nan, inplace=True)
+    conta_frete.replace('#', None, inplace=True)
 
     return conta_frete

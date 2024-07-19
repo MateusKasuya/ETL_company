@@ -1,4 +1,4 @@
-from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold, formar_tabela_nf_gold
+from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold, formar_tabela_nf_gold, formar_tabela_gerencial_frete_gold
 import pandas as pd
 
 
@@ -72,3 +72,13 @@ def test_transf_gold():
     test_transf = formar_tabela_transf_gold()
 
     assert pd.api.types.is_datetime64_any_dtype(test_transf['Data']) == True
+    
+    
+def test_gerencial_frete_gold():
+
+    test_gf = formar_tabela_gerencial_frete_gold()
+
+    unique_id_gf = len(test_gf.drop_duplicates(
+        subset=['Documento Contábil', 'Item Doc Contábil'])) - len(test_gf.index)
+
+    assert unique_id_gf == 0

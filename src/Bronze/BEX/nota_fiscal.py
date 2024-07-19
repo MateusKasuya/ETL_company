@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 def formar_tabela_nota_fiscal():
@@ -62,7 +61,7 @@ def formar_tabela_nota_fiscal():
 
     nf = nf.loc[:, ordem_colunas]
 
-    nf.replace('#', np.nan, inplace=True)
-    nf.replace('Não atribuído', np.nan, inplace=True)
+    nf.replace('#', None, inplace=True)
+    nf.replace('Não atribuído', None, inplace=True)
 
     return nf
