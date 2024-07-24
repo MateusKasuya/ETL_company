@@ -120,6 +120,10 @@ def formar_tabela_contrato_gold():
     contrato.drop(['Destino'], axis=1, inplace=True)
 
     contrato.rename(columns={'Cidade IBGE': 'Destino'}, inplace=True)
+    
+    contrato['Data do Contrato'] = pd.to_datetime(contrato['Data do Contrato'])
+    contrato['Data Início Entrega'] = pd.to_datetime(contrato['Data Início Entrega'])
+    contrato['Data Fim Entrega'] = pd.to_datetime(contrato['Data Fim Entrega'])
 
     contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
                                 'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
@@ -170,6 +174,8 @@ def formar_tabela_ov_gold():
     contrato = contrato.loc[:, ['Contrato-Item', 'Valor Frete Pedido']]
 
     ov = ov.merge(contrato, on='Contrato-Item', how='left')
+    
+    ov['Data da OV'] = pd.to_datetime(ov['Data da OV'])
 
     ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
                     'Valor', 'Peso Líquido', 'Valor Frete Pedido', 'Requisição Compra', 'Id Mot. Rec.',
@@ -217,6 +223,8 @@ def formar_tabela_nf_gold():
     cliente = cliente.loc[:, ['Id', 'Cliente']]
 
     nf = nf.merge(cliente, left_on='Id Cliente', right_on='Id', how='left')
+    
+    nf['Data criação'] = pd.to_datetime(nf['Data criação'])
 
     nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Pedido SalesForce', 'Data criação',
                     'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
@@ -248,6 +256,8 @@ def formar_tabela_dt_gold():
     nf.drop_duplicates(inplace=True)
 
     dt = dt.merge(nf, on=['Remessa', 'Item Rem'], how='left')
+    
+    dt['Data de criação'] = pd.to_datetime(dt['Data de criação'])
 
     dt = dt.loc[:, ['DT', 'Remessa', 'Item Rem', 'OV-Item', 'Data de criação', 'Quantidade',
                     'Valor Frete Total', 'Peso KG', 'Item Superior', 'Id Categoria',
@@ -313,9 +323,11 @@ def formar_tabela_gerencial_frete_gold():
                     'Destino', 'UF Destino']]
 
     gf = gf.merge(ov, on='OV-Item', how='left')
+    
+    gf['Data de lançamento'] = pd.to_datetime(gf['Data de lançamento'])
 
     ordem_colunas_gf = [
-        'Contrato Venda', 'Item Contrato', 'OV-Item', 'Origem',
+        'Contrato-Item', 'OV-Item', 'Origem',
         'UF Origem', 'Destino', 'UF Destino', 'Grupo de Mercadorias',
         'Incoterms', 'Frete', 'Volume Receita', 'Gross Sales', 'Net Sales',
         'Classe Contas', 'Documento Contábil', 'Item Doc Contábil',

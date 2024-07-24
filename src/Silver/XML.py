@@ -417,6 +417,14 @@ def formar_tabela_xml_cte():
             list_imposto.append(imposto_tratado[i])
             
     cte['Valor Imposto'] = list_imposto
+    
+    # Valor Carga
+    
+    carga = appendar_xml_lista('vCarga')
+    
+    carga_tratado = tratar_nested_tag(carga, 'vCarga')
+    
+    cte['Valor Carga'] = carga_tratado
 
     # Produto
 
@@ -425,7 +433,7 @@ def formar_tabela_xml_cte():
     produto_tratado = tratar_nested_tag(produto, 'proPred')
 
     cte['Produto'] = produto_tratado
-    
+        
     # Tipo CTE
     
     tipo_cte = appendar_xml_lista('tpCTe')
@@ -452,6 +460,10 @@ def formar_tabela_xml_cte():
     cte_final['Valor Imposto'] = cte_final['Valor Imposto'].astype(float)
     
     cte_final['Valor Frete s/ Imposto'] = cte_final['Valor Frete Total'] - cte_final['Valor Imposto']
+    
+    cte_final['Valor Carga'] = cte_final['Valor Carga'].replace('', np.nan)
+    
+    cte_final['Valor Carga'] = cte_final['Valor Carga'].astype(float) 
     
     cte_final['Peso Volume'] = cte_final['Peso Volume'].replace('', np.nan)
     

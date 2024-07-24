@@ -239,6 +239,8 @@ def itinerario():
     itinerario['Distância KM'] = itinerario['Distância KM'].str.replace(
         'KM', '')
     itinerario['Distância KM'] = itinerario['Distância KM'].str.strip()
+    
+    itinerario.drop_duplicates(subset='Id', keep='last', inplace=True)
 
     itinerario.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/ditinerario.csv',
                       index=False, decimal=',', encoding='latin-1')
@@ -557,9 +559,10 @@ def gerencial_frete():
     frete['Net Sales'] = frete['Net Sales'].astype(float)
     
     frete['OV-Item'] = frete['OV'].astype(str) + '-' + frete['Item OV'].astype(str)
+    frete['Contrato-Item'] = frete['Contrato Venda'].astype(str) + '-' + frete['Item Contrato'].astype(str)
 
     ordem_colunas = [
-        'Contrato Venda', 'Item Contrato', 'OV-Item',
+                'Contrato-Item', 'OV-Item',
                'Grupo de Mercadorias', 'Incoterms', 'Frete', 'Volume Receita',
                'Gross Sales', 'Net Sales', 'Classe Contas', 'Documento Contábil',
                'Item Doc Contábil', 'Data de lançamento', 'Data Compensação',

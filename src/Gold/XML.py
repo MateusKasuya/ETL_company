@@ -123,7 +123,7 @@ def formar_tabela_cte_gold():
     cte = cte.loc[:, ['XML', 'Expedidor', 'Origem Expedidor', 'CNPJ/CPF Expedidor', 'UF Origem Expedidor', 'Remetente', 'CNPJ/CPF Remetente',
                       'UF Origem Remetente', 'Origem Remetente', 'Recebedor', 'CNPJ/CPF Recebedor', 'Destino Recebedor', 'UF Destino Recebedor',
                       'Destinatário', 'CNPJ/CPF Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora','CNPJ Transportadora', 'Data',
-                      'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Produto','Grupo de Mercadorias',
+                      'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Valor Carga', 'Produto','Grupo de Mercadorias',
                       'Tipo CTE']]
             
     cte.to_excel('Data/Output/Gold/CTE.xlsx', index=False)
