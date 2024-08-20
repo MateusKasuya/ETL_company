@@ -125,6 +125,8 @@ def formar_tabela_cte_gold():
                       'Destinatário', 'CNPJ/CPF Destinatário', 'Destino Destinatário', 'UF Destino Destinatário', 'Transportadora','CNPJ Transportadora', 'Data',
                       'Chave NF', 'NF', 'CTE', 'Peso Volume', 'Valor Frete Total', 'Valor Carga', 'Produto','Grupo de Mercadorias',
                       'Tipo CTE']]
+    
+    cte.drop_duplicates(inplace = True)
             
     cte.to_excel('Data/Output/Gold/CTE.xlsx', index=False)
 

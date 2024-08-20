@@ -89,6 +89,8 @@ def fazer_de_para_bex():
             de_para_bex.at[index, 'Para'] = 'Uruçuí-PI'
         elif row['De'] == 'FORTALEZA DO TABOCAO-TO':
             de_para_bex.at[index, 'Para'] = 'Tabocão-TO'
+        elif row['De'] == 'POXOREO-MT':
+            de_para_bex.at[index, 'Para'] = 'Poxoréu-MT'
             
     def splitar_cidade_uf(cidade_uf: str):
         
@@ -105,3 +107,48 @@ def fazer_de_para_bex():
                        index=False, decimal=',', encoding='latin-1')
     
     return de_para_bex
+
+
+file_crop = 'Data/Output/Silver/Frete Defensivo/Cidades Frete Defensivo.csv'
+
+crop = pd.read_csv(file_crop, decimal = ',', encoding = 'latin-1')
+
+crop['Chave'] = crop['Cidade'] + '-' + crop['UF']
+
+de_para_crop = pd.DataFrame()
+
+de_para_crop['De'] = crop['Chave']
+
+lista_score = []
+
+for cidade_crop in crop['Chave']:
+    match = process.extractOne(cidade_crop, ibge['Chave'])
+    lista_score.append(match)
+
+lista_cidade = list(zip(*lista_score))[0]
+lista_score = list(zip(*lista_score))[1]
+
+de_para_crop['Para'] = lista_cidade
+de_para_crop['Score'] = lista_score
+
+for index, row in de_para_crop.iterrows():
+        if row['De'] == 'PARANAITA-RO':
+            de_para_crop.at[index, 'Para'] = 'Parnaíba-PI'
+        elif row['De'] == 'Fortaleza do Tabocao-TO':
+            de_para_crop.at[index, 'Para'] = 'Tabocão-TO'
+        elif row['De'] == 'POXOREO-MT':
+            de_para_crop.at[index, 'Para'] = 'Poxoréu-MT'
+
+def splitar_cidade_uf(cidade_uf: str):
+    
+    splitar_cidade_uf = cidade_uf.rsplit('-', 1)
+    
+    return pd.Series(splitar_cidade_uf)
+
+de_para_crop[['De-Cidade', 'De-UF']] = de_para_crop['De'].apply(splitar_cidade_uf)
+de_para_crop[['Para-Cidade', 'Para-UF']] = de_para_crop['Para'].apply(splitar_cidade_uf)
+
+de_para_crop = de_para_crop.loc[:, ['De-Cidade', 'De-UF', 'Para-Cidade', 'Para-UF', 'Score']]
+
+de_para_crop.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/De Para Cidades/de_para_frete_defensivo.csv',
+                   index=False, decimal=',', encoding='latin-1')

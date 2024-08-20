@@ -446,6 +446,7 @@ def formar_tabela_xml_cte():
     
     #  Para quando precisar fazer gambiarra
     # df_cte = pd.DataFrame(columns = cte.columns)
+    # cte_final = df_cte[:]
 
     cte_final = pd.concat([cte, df_cte])
 
@@ -473,7 +474,9 @@ def formar_tabela_xml_cte():
     
     cte_final['Tipo CTE'] = cte_final['Tipo CTE'].astype(float)
     
-    cte_final.drop_duplicates(inplace = True)
+    cte_final.drop_duplicates('XML', inplace = True)
+    
+    # cte_final = cte_final[cte_final['XML'] == '51240757700916000252570010013725801009610510-procCTe.xml']
 
     cte_final.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/XML/fCTE.csv',
                      index=False, decimal=',', encoding='latin-1')

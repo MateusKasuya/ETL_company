@@ -201,14 +201,14 @@ def produto():
 
     produto_carteira.dropna(subset='NCM Produto', inplace=True)
 
-    colunas_produto_estoque = ['Id Produto',
-                               'Produto', 'Grupo de Mercadorias']
+    # colunas_produto_estoque = ['Id Produto',
+    #                            'Produto', 'Grupo de Mercadorias']
 
-    produto_estoque = formar_tabela_estoque(colunas_produto_estoque)
+    # produto_estoque = formar_tabela_estoque(colunas_produto_estoque)
 
-    produto = pd.concat([produto_carteira, produto_estoque], axis=0)
+    # produto = pd.concat([produto_carteira, produto_estoque], axis=0)
 
-    produto.drop_duplicates(subset='Id Produto', inplace=True)
+    produto_carteira.drop_duplicates(subset='Id Produto', inplace=True)
 
     trocar_produto = {
         'Id Produto': 'Id',
@@ -216,14 +216,14 @@ def produto():
         'NCM Produto': 'NCM'
     }
 
-    produto.rename(columns=trocar_produto, inplace=True)
+    produto_carteira.rename(columns=trocar_produto, inplace=True)
 
-    produto.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dproduto.csv',
+    produto_carteira.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/dproduto.csv',
                    index=False, decimal=',', encoding='latin-1')
-    produto.to_excel('Data/Output/Gold/Produto.xlsx',
+    produto_carteira.to_excel('Data/Output/Gold/Produto.xlsx',
                      index=False)
 
-    return produto
+    return produto_carteira
 
 
 # Itinerário
@@ -238,7 +238,11 @@ def itinerario():
 
     itinerario['Distância KM'] = itinerario['Distância KM'].str.replace(
         'KM', '')
+    itinerario['Distância KM'] = itinerario['Distância KM'].str.replace(
+        '.', '')
     itinerario['Distância KM'] = itinerario['Distância KM'].str.strip()
+    
+    itinerario['Distância KM'] = itinerario['Distância KM'].astype(int)
     
     itinerario.drop_duplicates(subset='Id', keep='last', inplace=True)
 
@@ -271,14 +275,18 @@ def contrato():
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
+        'Local Expedição',
         'Origem',
         'UF Origem',
         'Id Cliente',
+        'Cliente',
         'Destino',
         'UF Destino',
         'Id Itinerário',
+        'Itinerário',
         'Grupo de Mercadorias',
         'Id Produto',
+        'Produto',
         'Obs Ped.Niv.Cab(txt)'
     ]
 
@@ -338,14 +346,18 @@ def ov():
         'Id Mot. Rec.',
         'Id Centro',
         'Id Local Exp.',
+        'Local Expedição',
         'Origem',
         'UF Origem',
         'Id Cliente',
+        'Cliente',
         'Destino',
         'UF Destino',
         'Id Itinerário',
+        'Itinerário',
         'Grupo de Mercadorias',
         'Id Produto',
+        'Produto',
         'Obs N. Fiscal (text)',
         'Rot Entrega (texto)'
     ]
@@ -384,9 +396,9 @@ def ov():
     ov = ov.loc[:, [
         'OV', 'Item OV', 'Contrato-Item', 'Tipo',
         'Data da OV', 'Quantidade', 'Valor', 'Peso Líquido',
-        'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem',
-        'Id Cliente', 'Destino', 'UF Destino',
-        'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto',
+        'Requisição Compra', 'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem',
+        'Id Cliente', 'Cliente', 'Destino', 'UF Destino',
+        'Id Itinerário', 'Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Produto',
         'Obs N. Fiscal (text)', 'Rot Entrega (texto)'
     ]]
 

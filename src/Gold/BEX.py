@@ -124,12 +124,14 @@ def formar_tabela_contrato_gold():
     contrato['Data do Contrato'] = pd.to_datetime(contrato['Data do Contrato'])
     contrato['Data Início Entrega'] = pd.to_datetime(contrato['Data Início Entrega'])
     contrato['Data Fim Entrega'] = pd.to_datetime(contrato['Data Fim Entrega'])
-
+    
+    # contrato = contrato[contrato['Id Mot. Rec.'].isna()]
+    
     contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
                                 'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
                                 'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
-                                'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem', 'Id Cliente', 'Destino', 'UF Destino',
-                                'Id Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Valor Frete Pedido', 'Obs Ped.Niv.Cab(txt)']]
+                                'Id Mot. Rec.', 'Id Centro', 'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem', 'Id Cliente', 'Cliente', 'Destino', 'UF Destino',
+                                'Id Itinerário', 'Itinerário', 'Grupo de Mercadorias', 'Id Produto', 'Produto', 'Valor Frete Pedido', 'Obs Ped.Niv.Cab(txt)']]
 
     contrato.replace('None-None', None, inplace=True)
 
@@ -171,17 +173,19 @@ def formar_tabela_ov_gold():
 
     contrato = pd.read_excel(file_contrato)
 
-    contrato = contrato.loc[:, ['Contrato-Item', 'Valor Frete Pedido']]
+    contrato = contrato.loc[:, ['Contrato-Item', 'Valor Frete Pedido', 'Data Início Entrega', 'Data Fim Entrega']]
 
     ov = ov.merge(contrato, on='Contrato-Item', how='left')
     
     ov['Data da OV'] = pd.to_datetime(ov['Data da OV'])
+    
+    # ov = ov[ov['Id Mot. Rec.'].isna()]
 
-    ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Quantidade',
+    ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Data Início Entrega', 'Data Fim Entrega', 'Quantidade',
                     'Valor', 'Peso Líquido', 'Valor Frete Pedido', 'Requisição Compra', 'Id Mot. Rec.',
-                    'Id Centro', 'Id Local Exp.', 'Origem', 'UF Origem', 'Id Cliente', 'Destino', 'UF Destino',
-                    'Id Itinerário', 'Grupo de Mercadorias',
-                    'Id Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
+                    'Id Centro', 'Id Local Exp.', 'Local Expedição', 'Origem', 'UF Origem', 'Id Cliente', 'Cliente', 'Destino', 'UF Destino',
+                    'Id Itinerário', 'Itinerário', 'Grupo de Mercadorias',
+                    'Id Produto', 'Produto', 'Obs N. Fiscal (text)', 'Rot Entrega (texto)']]
 
     ov.replace('None-None', None, inplace=True)
 
@@ -204,6 +208,8 @@ def formar_tabela_nf_gold():
     ov = ov.loc[:, ['OV-Item',
                     'Id Local Exp.', 'Origem', 'UF Origem',
                     'Id Cliente', 'Destino', 'UF Destino', 'Valor Frete Pedido']]
+    
+    # nf = nf[nf['Contrato-Item'] == '40013228-10']
 
     nf = nf.merge(ov, on='OV-Item', how='left')
 
@@ -225,6 +231,8 @@ def formar_tabela_nf_gold():
     nf = nf.merge(cliente, left_on='Id Cliente', right_on='Id', how='left')
     
     nf['Data criação'] = pd.to_datetime(nf['Data criação'])
+    
+    nf = nf[nf['NF-e: Status Doc'] == 'Autorizado']
 
     nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Pedido SalesForce', 'Data criação',
                     'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
