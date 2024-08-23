@@ -1,4 +1,4 @@
-from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold, formar_tabela_nf_gold, formar_tabela_gerencial_frete_gold
+from src.Gold.BEX import fazer_de_para_cidade_sap_ibge, formar_tabela_cliente_gold, formar_tabela_contrato_gold, formar_tabela_local_expedicao_gold, formar_tabela_dt_gold, formar_tabela_ov_gold, formar_tabela_transf_gold, formar_tabela_nf_gold, formar_tabela_gerencial_frete_gold, formar_tabela_estoque_gold
 import pandas as pd
 
 
@@ -82,3 +82,12 @@ def test_gerencial_frete_gold():
         subset=['Documento Contábil', 'Item Doc Contábil'])) - len(test_gf.index)
 
     assert unique_id_gf == 0
+
+def test_estoque_gold():
+    
+    test_estoque = formar_tabela_estoque_gold()
+    
+    unique_id_estoque = len(test_estoque.drop_duplicates(
+        subset=['Id Centro', 'Id Produto', 'Lote'])) - len(test_estoque.index)
+    
+    assert unique_id_estoque == 0

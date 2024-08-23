@@ -511,26 +511,7 @@ def conta_frete():
 
 def estoque():
 
-    colunas_estoque = [
-        'Id Centro',
-        'Id Grupo Merc.',
-        'Id Produto',
-        'Lote',
-        'Data Vencimento',
-        'Data Última EM',
-        'Texto Cabeç Doc',
-        'Id Cliente',
-        'Estoque Livre',
-        'Estoque Bloqueado',
-        'Estoque Consignado'
-    ]
-
-    estoque = formar_tabela_estoque(colunas_estoque)
-
-    estoque['Data Vencimento'] = pd.to_datetime(
-        estoque['Data Vencimento'], dayfirst=True)
-    estoque['Data Última EM'] = pd.to_datetime(
-        estoque['Data Última EM'], dayfirst=True)
+    estoque = formar_tabela_estoque()
 
     estoque.to_csv('C:/Users/O1000246/BUNGE/Dados Supply Origeo - Documentos/Projeto_Dados/Data/Output/Silver/BEX/destoque.csv',
                    index=False, decimal=',', encoding='latin-1')

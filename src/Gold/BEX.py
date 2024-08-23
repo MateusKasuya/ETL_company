@@ -120,13 +120,18 @@ def formar_tabela_contrato_gold():
     contrato.drop(['Destino'], axis=1, inplace=True)
 
     contrato.rename(columns={'Cidade IBGE': 'Destino'}, inplace=True)
-    
+
     contrato['Data do Contrato'] = pd.to_datetime(contrato['Data do Contrato'])
-    contrato['Data Início Entrega'] = pd.to_datetime(contrato['Data Início Entrega'])
+    contrato['Data Início Entrega'] = pd.to_datetime(
+        contrato['Data Início Entrega'])
     contrato['Data Fim Entrega'] = pd.to_datetime(contrato['Data Fim Entrega'])
-    
+
+    contrato['Cliente'] = contrato['Cliente'].str.title()
+    contrato['Local Expedição'] = contrato['Local Expedição'].str.title()
+    contrato['Produto'] = contrato['Produto'].str.title()
+
     # contrato = contrato[contrato['Id Mot. Rec.'].isna()]
-    
+
     contrato = contrato.loc[:, ['Contrato-Item', 'Contrato Venda', 'Item Contrato', 'Pedido SalesForce', 'Tipo',
                                 'Data do Contrato', 'Data Início Entrega', 'Data Fim Entrega',
                                 'Quantidade', 'Valor', 'Peso Líquido', 'Moeda', 'Incoterms',
@@ -173,12 +178,17 @@ def formar_tabela_ov_gold():
 
     contrato = pd.read_excel(file_contrato)
 
-    contrato = contrato.loc[:, ['Contrato-Item', 'Valor Frete Pedido', 'Data Início Entrega', 'Data Fim Entrega']]
+    contrato = contrato.loc[:, [
+        'Contrato-Item', 'Valor Frete Pedido', 'Data Início Entrega', 'Data Fim Entrega']]
 
     ov = ov.merge(contrato, on='Contrato-Item', how='left')
-    
+
     ov['Data da OV'] = pd.to_datetime(ov['Data da OV'])
-    
+
+    ov['Cliente'] = ov['Cliente'].str.title()
+    ov['Local Expedição'] = ov['Local Expedição'].str.title()
+    ov['Produto'] = ov['Produto'].str.title()
+
     # ov = ov[ov['Id Mot. Rec.'].isna()]
 
     ov = ov.loc[:, ['OV-Item', 'OV', 'Item OV', 'Contrato-Item', 'Tipo', 'Data da OV', 'Data Início Entrega', 'Data Fim Entrega', 'Quantidade',
@@ -208,7 +218,7 @@ def formar_tabela_nf_gold():
     ov = ov.loc[:, ['OV-Item',
                     'Id Local Exp.', 'Origem', 'UF Origem',
                     'Id Cliente', 'Destino', 'UF Destino', 'Valor Frete Pedido']]
-    
+
     # nf = nf[nf['Contrato-Item'] == '40013228-10']
 
     nf = nf.merge(ov, on='OV-Item', how='left')
@@ -229,10 +239,12 @@ def formar_tabela_nf_gold():
     cliente = cliente.loc[:, ['Id', 'Cliente']]
 
     nf = nf.merge(cliente, left_on='Id Cliente', right_on='Id', how='left')
-    
+
     nf['Data criação'] = pd.to_datetime(nf['Data criação'])
-    
+
     nf = nf[nf['NF-e: Status Doc'] == 'Autorizado']
+
+    nf['Produto'] = nf['Produto'].str.title()
 
     nf = nf.loc[:, ['Contrato-Item', 'OV-Item', 'Pedido SalesForce', 'Data criação',
                     'Hora da criação', 'Tipo', 'Código status NFe', 'NF-e: Status Doc',
@@ -264,7 +276,7 @@ def formar_tabela_dt_gold():
     nf.drop_duplicates(inplace=True)
 
     dt = dt.merge(nf, on=['Remessa', 'Item Rem'], how='left')
-    
+
     dt['Data de criação'] = pd.to_datetime(dt['Data de criação'])
 
     dt = dt.loc[:, ['DT', 'Remessa', 'Item Rem', 'OV-Item', 'Data de criação', 'Quantidade',
@@ -331,7 +343,7 @@ def formar_tabela_gerencial_frete_gold():
                     'Destino', 'UF Destino']]
 
     gf = gf.merge(ov, on='OV-Item', how='left')
-    
+
     gf['Data de lançamento'] = pd.to_datetime(gf['Data de lançamento'])
 
     ordem_colunas_gf = [
@@ -349,3 +361,38 @@ def formar_tabela_gerencial_frete_gold():
     gf.to_excel('Data/Output/Gold/Gerencial Frete.xlsx', index=False)
 
     return gf
+
+
+def formar_tabela_estoque_gold():
+
+    file_estoque = 'Data/Output/Silver/BEX/destoque.csv'
+
+    estoque = pd.read_csv(file_estoque, encoding='latin-1', decimal=',')
+
+    estoque['Data Vencimento'] = pd.to_datetime(
+        estoque['Data Vencimento'], dayfirst=True)
+    estoque['Data Última EM'] = pd.to_datetime(
+        estoque['Data Última EM'], dayfirst=True)
+
+    consignado = estoque[estoque['Estoque Consignado'] > 0]
+    consignado = consignado.loc[:, ['Id Centro', 'Centro', 'Grupo de mercadorias', 'Id Produto', 'Produto',
+                                    'Lote', 'Data Vencimento', 'Data Última EM', 'Id Cliente', 'Cliente', 'Estoque Consignado']]
+
+    bloqueado = estoque[estoque['Estoque Bloqueado'] > 0]
+    bloqueado.loc[:, ['Texto Cabeç Doc']] = bloqueado['Texto Cabeç Doc'] + \
+        ' QTDE: ' + bloqueado['Estoque Bloqueado'].astype(str)
+
+    bloqueado = bloqueado.groupby(by=['Id Centro', 'Id Produto',
+                                      'Lote'], dropna=False, as_index=False).agg({'Texto Cabeç Doc': lambda x: ' - '.join(x.astype(str))})
+
+    estoque = estoque.groupby(by=['Id Centro', 'Centro', 'Grupo de mercadorias', 'Id Produto', 'Produto',
+                                  'Lote', 'Data Vencimento', 'Data Última EM'], as_index=False, dropna=False).agg({'Estoque Livre': 'sum', 'Estoque Bloqueado': 'sum',
+                                                                                                                   'Estoque Consignado': 'sum'})
+
+    estoque = estoque.merge(
+        bloqueado, on=['Id Centro', 'Id Produto', 'Lote'], how='left')
+
+    estoque.to_excel('Data/Output/Gold/Estoque.xlsx', index=False)
+    consignado.to_excel('Data/Output/Gold/Estoque Terceiro.xlsx', index=False)
+
+    return estoque

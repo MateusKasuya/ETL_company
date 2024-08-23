@@ -143,3 +143,11 @@ def test_gerencial_frete():
                 'Item Doc Contábil'])) - len(test_gerencial_frete.index)
 
     assert unique_id_gerencial_frete == 0
+    
+def test_estoque():
+    
+    test_estoque = estoque()
+    
+    sum_estoque = sum(test_estoque['Estoque Livre'])
+
+    assert sum_estoque > 1
