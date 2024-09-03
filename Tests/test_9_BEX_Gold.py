@@ -47,11 +47,12 @@ def test_ov_gold():
     max_value = max(ov['OV-Item'].value_counts())
 
     assert max_value == 1
-    
+
+
 def test_nf_gold():
-    
+
     nf = formar_tabela_nf_gold()
-    
+
     sum_nf = sum(nf['Valor'])
 
     assert sum_nf > 0
@@ -72,8 +73,8 @@ def test_transf_gold():
     test_transf = formar_tabela_transf_gold()
 
     assert pd.api.types.is_datetime64_any_dtype(test_transf['Data']) == True
-    
-    
+
+
 def test_gerencial_frete_gold():
 
     test_gf = formar_tabela_gerencial_frete_gold()
@@ -83,11 +84,12 @@ def test_gerencial_frete_gold():
 
     assert unique_id_gf == 0
 
+
 def test_estoque_gold():
-    
+
     test_estoque = formar_tabela_estoque_gold()
-    
+
     unique_id_estoque = len(test_estoque.drop_duplicates(
         subset=['Id Centro', 'Id Produto', 'Lote'])) - len(test_estoque.index)
-    
+
     assert unique_id_estoque == 0
